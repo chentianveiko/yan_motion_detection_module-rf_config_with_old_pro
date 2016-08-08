@@ -30,7 +30,7 @@
 #define CLK_TYPE_HSE  4
 
 // 开机后的参数配置时间
-#define CONFIG_TIME_RESTART           10                // 重启后的配置时间，单位秒
+#define CONFIG_TIME_RESTART           60                // 重启后的配置时间，单位秒
 
 // 设备默认参数定义
 #define FLASH_INIT_FLAG_VALUE         0x3A5A9AAA        // 设备参数初始化标志

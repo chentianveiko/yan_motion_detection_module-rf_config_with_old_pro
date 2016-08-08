@@ -90,29 +90,44 @@ void HalResetRtcAlarm(void) {
  *********************************************************************************
  */
 uint16_t HalTimeCompare(RTC_TimeTypeDef timStr, RTC_DateTypeDef dataStr) {
-	uint16_t calcTmp_now, calcTmp_old;
+	uint32_t calcTmp_now, calcTmp_old;
+
+	calcTmp_now = HalTimeGetSeconds(timStr, dataStr);
+	calcTmp_old = HalTimeGetSeconds(RTC_TimeStr_bck, RTC_DateStr_bck);
+	return max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);  // 返回实际相差的秒数
 
 	// 获取实际间隔时间
-	if (dataStr.RTC_Year == RTC_DateStr_bck.RTC_Year) {
-		if (dataStr.RTC_Month == RTC_DateStr_bck.RTC_Month) {
-			if (dataStr.RTC_Date == RTC_DateStr_bck.RTC_Date) {
-				if (timStr.RTC_Hours == RTC_TimeStr_bck.RTC_Hours) {
-					calcTmp_now = timStr.RTC_Minutes * 60 + timStr.RTC_Seconds;
-					calcTmp_old = RTC_TimeStr_bck.RTC_Minutes * 60 + RTC_TimeStr_bck.RTC_Seconds;
+	/*if (dataStr.RTC_Year == RTC_DateStr_bck.RTC_Year) {
+	 if (dataStr.RTC_Month == RTC_DateStr_bck.RTC_Month) {
+	 if (dataStr.RTC_Date == RTC_DateStr_bck.RTC_Date) {
+	 if (timStr.RTC_Hours == RTC_TimeStr_bck.RTC_Hours) {
+	 calcTmp_now = timStr.RTC_Minutes * 60 + timStr.RTC_Seconds;
+	 calcTmp_old = RTC_TimeStr_bck.RTC_Minutes * 60 + RTC_TimeStr_bck.RTC_Seconds;
 
-					return max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);  // 返回实际相差的秒数
-				} else {
-					return (device_config.ctr_config.send_peroid + 1);
-				}
-			} else {
-				return (device_config.ctr_config.send_peroid + 1);
-			}
-		} else {
-			return (device_config.ctr_config.send_peroid + 1);
-		}
-	} else {
-		return (device_config.ctr_config.send_peroid + 1);
-	}
+	 return max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);  // 返回实际相差的秒数
+	 } else {
+	 return (device_config.ctr_config.send_peroid + 1);
+	 }
+	 } else {
+	 return (device_config.ctr_config.send_peroid + 1);
+	 }
+	 } else {
+	 return (device_config.ctr_config.send_peroid + 1);
+	 }
+	 } else {
+	 return (device_config.ctr_config.send_peroid + 1);
+	 }*/
+}
+uint32_t HalTimeGetSeconds(RTC_TimeTypeDef timStr, RTC_DateTypeDef dataStr) {
+	uint32_t seconds;
+
+	seconds = dataStr.RTC_Year * 12 + dataStr.RTC_Month;  // 获取月份总数
+	seconds = seconds * 31 + dataStr.RTC_Date;  // 获取日期总数
+	seconds = seconds * 24 + timStr.RTC_Hours;  // 获取小时总数
+	seconds = seconds * 60 + timStr.RTC_Minutes;  // 获取分钟总数
+	seconds = seconds * 60 + timStr.RTC_Seconds;  // 获取秒总为九
+
+	return seconds;
 }
 
 /*

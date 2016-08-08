@@ -201,9 +201,6 @@ void MainLooper(void) {
 					debug_log("infrared pin is low!\r\n");
 				}
 			}
-
-			// 每次闹钟唤醒后要重新配置闹钟以达到继续唤醒的目的
-			HalResetRtcAlarm();
 		}
 
 		// 发送灯控信号
