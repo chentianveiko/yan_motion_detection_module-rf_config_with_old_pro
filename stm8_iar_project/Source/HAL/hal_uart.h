@@ -1,4 +1,3 @@
-
 #ifndef __hal_uart__h
 #define __hal_uart__h
 
@@ -10,6 +9,7 @@
 #include "stm8l15x.h"
 #include "stm8l15x_conf.h"
 #include "hal_parset.h"
+#include "stdarg.h"
 
 extern bool ifEnabledUart;   // 用于判断是否使能了串口工作，如果没有，在进入低功耗模式的时候就不用做相关的处理
 
@@ -29,7 +29,7 @@ extern bool ifEnabledUart;   // 用于判断是否使能了串口工作，如果
 #define UART_CONFIG_StopBits          USART_StopBits_1
 #define UART_CONFIG_Parity            USART_Parity_No
 #define UART_CONFIG_Mode              (USART_Mode_Rx | USART_Mode_Tx)
-   
+
 // USART PARSET STU MACHINE DEFINE
 #define PARSET_HEADER1      1
 #define PARSET_HEADER2      2
@@ -39,7 +39,7 @@ extern bool ifEnabledUart;   // 用于判断是否使能了串口工作，如果
 #define PARSET_DATA         6
 #define PARSET_XOR          7
 #define PARSET_SUM          8
-   
+
 #define PARSET_HEADER1_VAL  0x3a    // the value of header
 #define PARSET_HEADER2_VAL  0x5a
 
@@ -54,18 +54,8 @@ void HalUartConfigExitSleep(void);
 void HalUartConfigSendByte(unsigned char byteIn);
 void HalUartConfigSendString(unsigned char *str);
 void HalUartConfigRX_Callback(unsigned char ch);
-void HalUartConfigSendStrLen(unsigned char *str,uint8_t len);
-
-
-
-
-
-
-
-
-
-
+void HalUartConfigSendStrLen(unsigned char *str, uint8_t len);
+void debug_log(const char *fmt, ...);
 
 #endif
-
 

@@ -38,16 +38,13 @@ typedef uint8_t hw_mcu_unique_id_t[12];
  *                                 CONSTANTS                                     
  *******************************************************************************
  */
-#define HAL_MCU_FLASH_BEGIN_ADDR        0xA800
-#define HAL_MCU_FLASH_END_ADDR          0x17FFF
+#define HAL_MCU_FLASH_BEGIN_ADDR        0x00FC00   // 将程序Flash的最后1KB数据存储区域用作设备参数存储
+#define HAL_MCU_FLASH_END_ADDR          0x00FFFF
 // EEPROM块0起止地址   
-#define HAL_EEPROM_B0_BEGIN_ADDR           0x001000
-#define HAL_EEPROM_B0_END_ADDR             0x00103F
-
-// FLash初始化标志存储说明
-#define FLASH_INIT_FLAG_ADDR          (HAL_EEPROM_B0_BEGIN_ADDR+0)
-#define FLASH_INIT_FLAG_SIZE          4
-#define FLASH_INIT_FLAG_ENDADDR       (HAL_EEPROM_B0_BEGIN_ADDR+3)
+#define HAL_EEPROM_B0_BEGIN_ADDR           0x001000  // EEPROM的每个PAGE=BLOCK=128Bytes,具体使用方法参考PDF
+#define HAL_EEPROM_B1_BEGIN_ADDR           0x001080
+#define HAL_EEPROM_B2_BEGIN_ADDR           0x001100
+#define HAL_EEPROM_B3_BEGIN_ADDR           0x001180
 
 /*
  *******************************************************************************
@@ -59,11 +56,6 @@ void HalMcuEnterSleep(void);
 
 /* Board exit sleep  mode */
 void HalMcuExitSleep(void);
-
-void HalMcuEnterLowPowerRunMode(void);
-void HalMcuExitLowPowerRunMode(void);
-void HalMcuEnterLowPowerWaitMode(void);
-void HalMcuExitLowPowerWaitMode(void);
 
 void _hw_board_random_init(void);
 int32_t hw_board_random_get(void);

@@ -12,47 +12,6 @@
 #include "hal_flash.h"
 #include "../Startup/main.h"
 
-void HalMcuEnterLowPowerRunMode(void) {
-	uint16_t i;
-	// 1. Jump to RAM
-	// 这一步还没有实现，系统改用ActiveHalt模式了
-
-	// 2. 关闭高速振荡器和不用的外设以及ADC
-	// 3. 屏蔽掉所有的*中断(interrupt)* 应该不包含event
-	disableInterrupts();
-
-	// 4. 置位FLASH_CR1寄存器中的EEPM位，关闭Flash/Data EEPROM
-	FLASH_PowerRunModeConfig (FLASH_Power_IDDQ); // 该函数只能在RAM中执行
-
-	// 5. 添加一个软件延时以确保Flash/Data EEPROM关闭
-	for (i = 0; i < 100; i++) {
-		nop();
-	}
-
-	// 6. 置位CLK_REGCSR中的REGOFF位进入低功耗运行模式(LPR)
-	CLK_MainRegulatorCmd (DISABLE);
-}
-
-void HalMcuExitLowPowerRunMode(void) {
-	// 1. 清零CLK_REGCSR寄存器中的REGOFF位，并通过CLK_REGCSR中的REGREADY==1来判定打开成功
-	// 2. 清零FLASH_CR1中的EEPM位，等待CLK_REGCSR中的EEREADY==1来判定打开成功
-	// 3. 重新设置中断
-	// 4. 如果有必要的话跳入Flash/Data EEPROM
-}
-
-void HalMcuEnterLowPowerWaitMode(void) {
-	HalMcuEnterLowPowerRunMode();
-	// 1. 在low power run模式下执行WFE指令 -> 进入low power wait模式
-	wfe();
-}
-
-void HalMcuExitLowPowerWaitMode(void) {
-	// 1. 唤醒后已经进入了low power run模式，应当从low power run模式回到正常模式
-	HalMcuExitLowPowerRunMode();
-
-	// 2. 正常模式下配置各项检测功能和外设
-}
-
 /*
  *******************************************************************************
  *                                 FUNCTIONS                                 
@@ -63,7 +22,7 @@ void HalMcuEnterSleep(void) {
 	disableInterrupts();
 	HalRFEnterSleep (HalRF1);
 	spi_enter_sleep();
-	HalKeyInit();
+	//HalKeyInit();
 	if (ifEnabledUart == true) {
 		HalUartConfigEnterSleep();
 	}
@@ -75,7 +34,8 @@ void HalMcuEnterSleep(void) {
 	GPIO_Init(GPIOB, GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
 
-	GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
+	GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7,
+			GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOE, GPIO_Pin_All, GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOF, GPIO_Pin_0, GPIO_Mode_Out_PP_Low_Slow);
 
@@ -99,10 +59,10 @@ void HalMcuExitSleep(void) {
 	SystemClockInit (CLK_TYPE_HSE); // 进入到正常模式使用HSI作为系统时钟
 
 	spi_exit_sleep();
-	HalKeyInit();
 	HalRFExitSleep (HalRF1);
+
+	ifEnabledUart = true; // 暂时只有在配置循环完成前使用串口调试功能
 	if (ifEnabledUart == true) {
-		ifEnabledUart = false;
 		HalUartConfigExitSleep();
 	}
 

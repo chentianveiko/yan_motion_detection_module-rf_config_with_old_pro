@@ -9,13 +9,16 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=145554742
+Checksum=743424871
 [CallStack]
 ShowArgs=0
 [Disassembly]
 MixedMode=1
 [struct_types]
-Fmt0=LinkParDef-LinkArealId	4	0
+Fmt0=LightParDef-Leval	3	0
+Fmt1=LightParDef-ON_seconds	3	0
+Fmt2=LightParDef-groupId	3	0
+Fmt3=LinkParDef-LinkArealId	4	0
 [array_types]
 Fmt0=uint8_t[4]	4	0
 [DataSample]
@@ -32,7 +35,7 @@ LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\main.c}.102.3" 0 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.166.7" 1 0 0 0 "" 0 ""
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.190.4" 1 0 0 0 "" 0 ""
 Count=2
 [Aliases]
 A0=_ "E:\Veiko-Workspace\ChenTian\workspace\MotionDetection\ir_svn\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""

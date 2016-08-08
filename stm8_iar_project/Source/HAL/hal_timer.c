@@ -12,6 +12,7 @@ void LSE_StabTime(void) {
 
 	CLK_PeripheralClockConfig(CLK_Peripheral_TIM4, ENABLE);
 
+	TIM4_DeInit();
 	/* Configure TIM4 to generate an update event each 1 s */
 	TIM4_TimeBaseInit(TIM4_Prescaler_16384, 123);
 	/* Clear update flag */
