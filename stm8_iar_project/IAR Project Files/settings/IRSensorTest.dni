@@ -1,0 +1,50 @@
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[DebugChecksum]
+Checksum=1019599597
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[struct_types]
+Fmt0=LinkParDef-LinkArealId	4	0
+[array_types]
+Fmt0=uint8_t[4]	4	0
+[DataSample]
+LogEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Breakpoints]
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\main.c}.102.3" 0 0 0 0 "" 0 ""
+Count=1
+[Aliases]
+A0=_ "E:\Veiko-Workspace\ChenTian\workspace\MotionDetection\ir_svn\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""
+A1=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\HAL\hal_rf.c" ""
+A2=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\HAL\virtual_spi.c" ""
+A3=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_gpio.c" ""
+A4=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_tim4.c" ""
+A5=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_usart.c" ""
+A6=_ "G:\WorkSpace\BlackBox\IrDecProject-iar\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_flash.c" ""
+A7=_ "G:\WorkSpace\BlackBox\IrDecProject-iar\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""
+A8=_ "G:\WorkSpace\BlackBox\IrDecProject-iar\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_usart.c" ""
+A9=_ "G:\WorkSpace\BlackBox\ir_svn-2016-06-02\Source\Link\link.c" ""
+Count=10
+SuppressDialog=1
+[DebuggerSettings]
+DisableInterruptsWhenStepping=0
