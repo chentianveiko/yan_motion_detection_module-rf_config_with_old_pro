@@ -34,25 +34,26 @@ void LSE_StabTime(void) {
 
 /*
  *********************************************************************************
- 函数功能: 配置定时器4,用于超时定时器计时,TIM4的计时最小间隔设为2ms
+ 函数功能: 配置定时器4,用于超时定时器计时,TIM4的计时最小间隔设为1ms
  函数参数: None
  函数返回: None
  *********************************************************************************
  */
 void HalTIM4_Config(void) {
 	CLK_PeripheralClockConfig(CLK_Peripheral_TIM4, ENABLE);
+	TIM4_Cmd (DISABLE);
+	TIM4_DeInit();
 	/* Time base configuration */
-	TIM4_TimeBaseInit(TIM4_Prescaler_128, 250); // 16000000/128*250=2ms
+	TIM4_TimeBaseInit(TIM4_Prescaler_128, 125); // 16000000/128*125=1ms
+	TIM4_ARRPreloadConfig (ENABLE);
+	TIM4_SetAutoreload(125);
 	/* Clear TIM4 update flag */
 	TIM4_ClearFlag (TIM4_FLAG_Update);
 	/* Enable update interrupt */
 	TIM4_ITConfig(TIM4_IT_Update, ENABLE);
 
-	// enable interrupts
-	// enableInterrupts();
-
 	/* Enable TIM4 */
-	TIM4_Cmd (ENABLE);
+	TIM4_Cmd(ENABLE);
 }
 
 /*
@@ -85,10 +86,9 @@ void HalRunTimerFuncMS(void) {
 
 	for (i = 0; i < MAX_RUN_TIMER_NUM; i++) {
 		if ((runTimerArray[i].active == true) && (runTimerArray[i].cnt > 0) && (runTimerArray[i].type == RT_TP_MSECOND)) {
-			if (runTimerArray[i].cnt >= 2) {
-				runTimerArray[i].cnt -= 2;
+			if (runTimerArray[i].cnt >= 1) {
+				runTimerArray[i].cnt -= 1;
 			} else {
-				runTimerArray[i].cnt = 0;
 				runTimerArray[i].active = false;
 			}
 		}
@@ -132,12 +132,12 @@ void HalRestartRunTimer(uint8_t runTimerID, uint8_t timeset, uint8_t runtype) {
  *********************************************************************************
  */
 void HalTIM4_interrupt_callback(void) {
-	static int t4_i = 0;
+	static uint32_t t4_i = 0;
 
 	t4_i++;
 	HalRunTimerFuncMS();     // 超时计时器--秒级
 
-	if (t4_i >= 500) {
+	if (t4_i >= 1000) {
 		t4_i = 0;
 		HalRunTimerFuncS();  // 超时计时器--秒级
 	}

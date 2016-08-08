@@ -27,6 +27,7 @@
 #define CLK_TYPE_LSE  0
 #define CLK_TYPE_HSI  1
 #define CLK_TYPE_LSI  3
+#define CLK_TYPE_HSE  4
 
 // 开机后的参数配置时间
 #define CONFIG_TIME_RESTART           60                // 重启后的配置时间，单位秒

@@ -96,7 +96,7 @@ void HalMcuEnterSleep(void) {
 /* Board exit sleep  mode */
 void HalMcuExitSleep(void) {
 	disableInterrupts();
-	SystemClockInit (CLK_TYPE_HSI); // 进入到正常模式使用HSI作为系统时钟
+	SystemClockInit (CLK_TYPE_HSE); // 进入到正常模式使用HSI作为系统时钟
 
 	spi_exit_sleep();
 	HalKeyInit();

@@ -95,6 +95,25 @@ void SystemClockInit(uint8_t Clk_Sel) {
 		}
 
 		break;
+
+	case CLK_TYPE_HSE:
+		if (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_HSE) {
+			CLK_HSEConfig (CLK_HSE_ON);
+			while (CLK_GetFlagStatus(CLK_FLAG_HSERDY) == RESET)
+				;
+
+			/* Select HSE as system clock source */
+			CLK_SYSCLKSourceSwitchCmd (ENABLE);
+			CLK_SYSCLKSourceConfig (CLK_SYSCLKSource_HSE);
+
+			/* system clock prescaler: 1*/
+			CLK_SYSCLKDivConfig (CLK_SYSCLKDiv_1);
+			while (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_HSE)
+				;
+
+			CLK_SYSCLKSourceSwitchCmd (DISABLE);
+		}
+		break;
 	default:
 		break;
 	}
@@ -128,7 +147,21 @@ static void IrLightControl(uint8_t group, uint8_t level, uint32_t seconds) {
 	preq->seconds = HTONL(seconds);
 	LinkSend(0xFFFF, LIGHT_IR_CONTROL, buffer, sizeof(buffer));
 }
+/*
+ *******************************************************************************
+ @brief   主循环，在开机或重启后，经过配置循环后进入主循环，主循环根据配置的信息来检测
+ 红外探测事件和闹钟唤醒事件，并根据配置信息来进行灯控制器的组播控制，一次任务完成后，系
+ 统会进入低功耗状态
 
+ @params   none
+
+ @author   Veiko
+
+ @time     2016-8-5
+
+ @return   无
+ *******************************************************************************
+ */
 void MainLooper(void) {
 	bool ifNeedSend = false;
 	Hal_RfTxComplete = 0;
@@ -203,13 +236,13 @@ void MainLooper(void) {
  *******************************************************************************
  */
 int main(void) {
-	SystemClockInit (CLK_TYPE_HSI);
+	SystemClockInit (CLK_TYPE_HSE);
 	HalFlashInit();
 	_hw_board_random_init();
 	disableInterrupts();
 	spi_init();
 	HalRFInit();
-	HalIRSensorInit();
+
 	enableInterrupts();
 
 	imd_config_load();
@@ -225,7 +258,11 @@ int main(void) {
 	}
 	HalResetRtcAlarm();
 
+	HalTIM4_Config();
 	ConfigLoop();  // 等待rf配置
+
+	HalIRSensorInit();
+
 	MainLooper();  // 主循环
 }
 /*
@@ -249,7 +286,6 @@ void ConfigLoop(void) {
 		if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
 			break;
 		}
-		nop();
 	}
 }
 /*
@@ -277,10 +313,13 @@ void rf_data_receive_handler(struct LinkMessage *message) {
 		imd_rf_setnetPar_deal(message);
 		break;
 	case MESSAGE_TP_GET_NP_REQ:
+		imd_rf_getnetPar_deal(message);
 		break;
 	case MESSAGE_TP_SET_MTP_REQ:
+		imd_rf_setlightPar_deal(message);
 		break;
 	case MESSAGE_TP_GET_MTP_REQ:
+		imd_rf_getlightPar_deal(message);
 		break;
 	default:
 		break;
@@ -351,7 +390,44 @@ void imd_rf_respond_scan_message(void) {
  *******************************************************************************
  */
 void imd_rf_setnetPar_deal(struct LinkMessage *message) {
+	uint8_t errorCode = 0;
 
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (message->length < 8) {
+		return;
+	}
+
+	device_config.net_config.LinkAddr = message->data[0];
+	device_config.net_config.LinkAddr <<= 8;
+	device_config.net_config.LinkAddr += message->data[1];
+
+	device_config.net_config.LinkNetId = message->data[2];
+	device_config.net_config.LinkNetId <<= 8;
+	device_config.net_config.LinkNetId += message->data[3];
+
+	device_config.net_config.LinkArealId = message->data[4];
+	device_config.net_config.LinkArealId <<= 8;
+	device_config.net_config.LinkArealId += message->data[5];
+	device_config.net_config.LinkArealId <<= 8;
+	device_config.net_config.LinkArealId += message->data[6];
+	device_config.net_config.LinkArealId <<= 8;
+	device_config.net_config.LinkArealId += message->data[7];
+	device_config.net_config.enableRoute = FALSE;
+
+	imd_config_restore();
+
+	LinkInit();
+	LinkSetAddress(device_config.net_config.LinkAddr);   // 设置设备地址
+	LinkSetNetId(device_config.net_config.LinkNetId);    // 设置网络地址
+	LinkSetAreaId(device_config.net_config.LinkArealId); // 设置区域地址
+
+	LinkSend(SourceAddress, MESSAGE_TP_SET_NP_REQ, &errorCode, 1);
+	// 等待无线信号发送完成
+	while (0 == Hal_RfTxComplete) {
+		;
+	}
+	Hal_RfTxComplete = 0;
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 }
 /*
  *******************************************************************************
@@ -367,7 +443,29 @@ void imd_rf_setnetPar_deal(struct LinkMessage *message) {
  *******************************************************************************
  */
 void imd_rf_getnetPar_deal(struct LinkMessage *message) {
+	uint8_t arrayS[9];
 
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+
+	arrayS[0] = 0;   // 错误码
+	arrayS[1] = (uint8_t)(device_config.net_config.LinkAddr >> 8);
+	arrayS[2] = (uint8_t)(device_config.net_config.LinkAddr);
+
+	arrayS[3] = (uint8_t)(device_config.net_config.LinkNetId >> 8);
+	arrayS[4] = (uint8_t)(device_config.net_config.LinkNetId);
+
+	arrayS[5] = (uint8_t)(device_config.net_config.LinkArealId >> 24);
+	arrayS[6] = (uint8_t)(device_config.net_config.LinkArealId >> 16);
+	arrayS[7] = (uint8_t)(device_config.net_config.LinkArealId >> 8);
+	arrayS[8] = (uint8_t)(device_config.net_config.LinkArealId);
+
+	LinkSend(SourceAddress, MESSAGE_TP_GET_NP_REQ, arrayS, 9);
+	// 等待无线信号发送完成
+	while (0 == Hal_RfTxComplete) {
+		;
+	}
+	Hal_RfTxComplete = 0;
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 }
 /*
  *******************************************************************************
@@ -383,7 +481,42 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
  *******************************************************************************
  */
 void imd_rf_setlightPar_deal(struct LinkMessage *message) {
+	uint8_t errorCode = 0;
 
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (message->length < 10) {
+		return;
+	}
+
+	device_config.ctr_config.groupId = message->data[0];
+
+	device_config.ctr_config.Leval = message->data[1];
+
+	device_config.ctr_config.ON_seconds = message->data[2];
+	device_config.ctr_config.ON_seconds <<= 8;
+	device_config.ctr_config.ON_seconds += message->data[3];
+	device_config.ctr_config.ON_seconds <<= 8;
+	device_config.ctr_config.ON_seconds += message->data[4];
+	device_config.ctr_config.ON_seconds <<= 8;
+	device_config.ctr_config.ON_seconds += message->data[5];
+
+	device_config.ctr_config.send_peroid = message->data[6];
+	device_config.ctr_config.send_peroid <<= 8;
+	device_config.ctr_config.send_peroid += message->data[7];
+	device_config.ctr_config.send_peroid <<= 8;
+	device_config.ctr_config.send_peroid += message->data[8];
+	device_config.ctr_config.send_peroid <<= 8;
+	device_config.ctr_config.send_peroid += message->data[9];
+
+	imd_config_restore();
+
+	LinkSend(SourceAddress, MESSAGE_TP_SET_MTP_REQ, &errorCode, 1);
+	// 等待无线信号发送完成
+	while (0 == Hal_RfTxComplete) {
+		;
+	}
+	Hal_RfTxComplete = 0;
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 }
 /*
  *******************************************************************************
@@ -399,7 +532,31 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
  *******************************************************************************
  */
 void imd_rf_getlightPar_deal(struct LinkMessage *message) {
+	uint8_t arrayS[11];
 
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+
+	arrayS[0] = 0;   // 错误码
+	arrayS[1] = (uint8_t)(device_config.ctr_config.groupId);
+	arrayS[2] = (uint8_t)(device_config.ctr_config.Leval);
+
+	arrayS[3] = (uint8_t)(device_config.ctr_config.ON_seconds >> 24);
+	arrayS[4] = (uint8_t)(device_config.ctr_config.ON_seconds >> 16);
+	arrayS[5] = (uint8_t)(device_config.ctr_config.ON_seconds >> 8);
+	arrayS[6] = (uint8_t)(device_config.ctr_config.ON_seconds);
+
+	arrayS[7] = (uint8_t)(device_config.ctr_config.send_peroid >> 24);
+	arrayS[8] = (uint8_t)(device_config.ctr_config.send_peroid >> 16);
+	arrayS[9] = (uint8_t)(device_config.ctr_config.send_peroid >> 8);
+	arrayS[10] = (uint8_t)(device_config.ctr_config.send_peroid);
+
+	LinkSend(SourceAddress, MESSAGE_TP_GET_MTP_REQ, arrayS, 11);
+	// 等待无线信号发送完成
+	while (0 == Hal_RfTxComplete) {
+		;
+	}
+	Hal_RfTxComplete = 0;
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 }
 /*
  *******************************************************************************
