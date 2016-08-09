@@ -127,7 +127,6 @@ extern LinkAddr_t SourceAddress;
 extern imd_config_t device_config;
 
 void SystemClockInit(uint8_t Clk_Sel);
-void rf_data_receive_handler(struct LinkMessage *message);
 void ConfigLoop(void);
 
 void imd_config_load(void);

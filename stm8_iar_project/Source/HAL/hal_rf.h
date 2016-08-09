@@ -2,22 +2,22 @@
 #define __HAL_RF__
 /*
  *******************************************************************************
- *                                  INCLUDE                                  
+ *                                  INCLUDE
  *******************************************************************************
  */
 #include "hal_mcu.h"
+#include "stdbool.h"
 
 /*
  *******************************************************************************
- *                                 CONSTANTS                                     
+ *                                 CONSTANTS
  *******************************************************************************
  */
 #define HAL_RF_RECEIVE_EVENT            0
 #define HAL_RF_TX_COMPLETE_EVENT        1
 
-#define HAL_RF_1        
+#define HAL_RF_1
 #define xHAL_RF_2
-  
 
 #define HAL_RF_DATE_RATE_0_5KBPS         1
 #define HAL_RF_DATE_RATE_1_5KBPS         2
@@ -27,36 +27,28 @@
 
 /*
  *******************************************************************************
- *                                  TYPEDEFS                                  
+ *                                  TYPEDEFS
  *******************************************************************************
  */
-enum HalRFDevice
-{
+enum HalRFDevice {
 #if (defined HAL_RF_1)
-  HalRF1,
+	HalRF1,
 #endif
-  
+
 #if (defined HAL_RF_2)
-  HalRF2,
+	HalRF2,
 #endif
-  HalRFDeviceNum,
+	HalRFDeviceNum,
 };
 
-enum HalRFChannel
-{
-  HAL_RF_CHANNEL_0,
-  HAL_RF_CHANNEL_1,
-  HAL_RF_CHANNEL_2,
-  HAL_RF_CHANNEL_3,
-  HAL_RF_CHANNEL_4,
-  HAL_RF_CHANNEL_5,
-  HAL_RF_CHANNEL_NB,
+enum HalRFChannel {
+	HAL_RF_CHANNEL_0, HAL_RF_CHANNEL_1, HAL_RF_CHANNEL_2, HAL_RF_CHANNEL_3, HAL_RF_CHANNEL_4, HAL_RF_CHANNEL_5, HAL_RF_CHANNEL_NB,
 };
 typedef enum HalRFChannel HalRFChannel_t;
 
 /*
  *******************************************************************************
- *                                 FUNCTIONS                                 
+ *                                 FUNCTIONS
  *******************************************************************************
  */
 void HalRFInit(void);

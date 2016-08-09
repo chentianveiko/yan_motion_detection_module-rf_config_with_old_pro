@@ -45,9 +45,9 @@ void HalTIM4_Config(void) {
 	TIM4_Cmd (DISABLE);
 	TIM4_DeInit();
 	/* Time base configuration */
-	TIM4_TimeBaseInit(TIM4_Prescaler_128, 125); // 16000000/128*125=1ms
+	TIM4_TimeBaseInit(TIM4_Prescaler_512, 250); // 16000000/64*250=8ms
 	TIM4_ARRPreloadConfig (ENABLE);
-	TIM4_SetAutoreload(125);
+	TIM4_SetAutoreload(250);
 	/* Clear TIM4 update flag */
 	TIM4_ClearFlag (TIM4_FLAG_Update);
 	/* Enable update interrupt */
@@ -66,11 +66,11 @@ void HalTIM4_Config(void) {
  */
 void HalRunTimerFuncS(void) {
 	uint8_t i;
-
 	for (i = 0; i < MAX_RUN_TIMER_NUM; i++) {
 		if ((runTimerArray[i].active == true) && (runTimerArray[i].cnt > 0) && (runTimerArray[i].type == RT_TP_SECOND)) {
 			runTimerArray[i].cnt--;
 		} else {
+			runTimerArray[i].cnt = 0;
 			runTimerArray[i].active = false;
 		}
 	}
@@ -84,15 +84,24 @@ void HalRunTimerFuncS(void) {
  */
 void HalRunTimerFuncMS(void) {
 	uint8_t i;
+	static uint32_t t4_i = 0;
 
 	for (i = 0; i < MAX_RUN_TIMER_NUM; i++) {
 		if ((runTimerArray[i].active == true) && (runTimerArray[i].cnt > 0) && (runTimerArray[i].type == RT_TP_MSECOND)) {
-			if (runTimerArray[i].cnt >= 1) {
-				runTimerArray[i].cnt -= 1;
+			if (runTimerArray[i].cnt >= 8) {
+				runTimerArray[i].cnt -= 8;
 			} else {
+				runTimerArray[i].cnt = 0;
 				runTimerArray[i].active = false;
 			}
 		}
+	}
+
+	t4_i++;
+
+	if (t4_i >= 125) {
+		t4_i = 0;
+		HalRunTimerFuncS();  // 超时计时器--秒级
 	}
 }
 
@@ -119,10 +128,12 @@ uint8_t HalgetRunTimerCnt(uint8_t runTimerID) {
  *********************************************************************************
  */
 void HalRestartRunTimer(uint8_t runTimerID, uint8_t timeset, uint8_t runtype) {
+  disableInterrupts();
 	runTimerArray[runTimerID].active = false;
 	runTimerArray[runTimerID].type = runtype;
 	runTimerArray[runTimerID].cnt = (timeset == 0) ? runTimerArray[runTimerID].cnt : timeset;
 	runTimerArray[runTimerID].active = true;
+    enableInterrupts();
 }
 
 /*
@@ -133,14 +144,6 @@ void HalRestartRunTimer(uint8_t runTimerID, uint8_t timeset, uint8_t runtype) {
  *********************************************************************************
  */
 void HalTIM4_interrupt_callback(void) {
-	static uint32_t t4_i = 0;
-
-	t4_i++;
 	HalRunTimerFuncMS();     // 超时计时器--秒级
-
-	if (t4_i >= 1000) {
-		t4_i = 0;
-		HalRunTimerFuncS();  // 超时计时器--秒级
-	}
 }
 

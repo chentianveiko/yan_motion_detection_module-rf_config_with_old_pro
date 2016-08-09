@@ -94,7 +94,12 @@ uint16_t HalTimeCompare(RTC_TimeTypeDef timStr, RTC_DateTypeDef dataStr) {
 
 	calcTmp_now = HalTimeGetSeconds(timStr, dataStr);
 	calcTmp_old = HalTimeGetSeconds(RTC_TimeStr_bck, RTC_DateStr_bck);
-	return max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);  // 返回实际相差的秒数
+	calcTmp_old = max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);
+	if (ifEnabledUart == true) {
+		debug_log("the interval is:%d\r\n", (int) calcTmp_old);
+	}
+
+	return calcTmp_old;  // 返回实际相差的秒数
 
 	// 获取实际间隔时间
 	/*if (dataStr.RTC_Year == RTC_DateStr_bck.RTC_Year) {

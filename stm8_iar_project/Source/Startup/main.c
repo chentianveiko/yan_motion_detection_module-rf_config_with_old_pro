@@ -26,7 +26,7 @@ imd_config_t device_config;
  *                                 FUNCTIONS
  *******************************************************************************
  */
-
+static void rf_data_receive_handler(struct LinkMessage *message);
 /*
  *******************************************************************************
  * 函数功能：初始化系统时钟
@@ -269,7 +269,7 @@ int main(void) {
 	LinkSetAddress((int) device_config.net_config.LinkAddr);   // 设置设备地址
 	LinkSetNetId((int) device_config.net_config.LinkNetId);    // 设置网络地址
 	LinkSetAreaId((int) device_config.net_config.LinkArealId); // 设置区域地址
-	LinkSetReceiveCallback (rf_data_receive_handler);
+	LinkSetReceiveCallback(rf_data_receive_handler);
 
 	HalTIM4_Config();
 	ConfigLoop();  // 等待rf配置
@@ -301,13 +301,17 @@ int main(void) {
  */
 void ConfigLoop(void) {
 	static uint32_t time_last = 0;
+	uint32_t rand_value;
 
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);
 	while (1) {
+
+		rand_value = hw_board_random_get();
 		if (time_last != HalgetRunTimerCnt(GenRunTimerID)) {
 			time_last = HalgetRunTimerCnt(GenRunTimerID);
 			if (ifEnabledUart == true) {
 				debug_log("[beautiful note]--config loop time remain:%d seconds!\r\n", (int) time_last);
+				debug_log("[beautiful note]--rand value is:%d!\r\n", (int) rand_value);
 			}
 		}
 		if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
@@ -331,13 +335,13 @@ void ConfigLoop(void) {
  @return   无
  *******************************************************************************
  */
-void rf_data_receive_handler(struct LinkMessage *message) {
+static void rf_data_receive_handler(struct LinkMessage *message) {
 
 	SourceAddress = NTOHS(message->srcAddr);
 
 	switch (message->type) {
 
-	// 扫描设备
+// 扫描设备
 	case LINK_DEVICE_SCAN:
 		imd_rf_respond_scan_message();
 		break;
@@ -405,10 +409,11 @@ void imd_rf_respond_scan_message(void) {
 		}
 	}
 
-	// 返回帧
+// 返回帧
 	respondStructer = (ScanResponse_t *) buffer;
 
 	HW_MCU_READ_DEVICE_ID(respondStructer->uniqueId);
+	respondStructer->deviceType = DEV_TP_IM_DETECTER;
 	respondStructer->areaId = HTONL(device_config.net_config.LinkArealId);
 	respondStructer->netId = HTONS(device_config.net_config.LinkNetId);
 	respondStructer->address = HTONS(device_config.net_config.LinkAddr);
@@ -419,7 +424,7 @@ void imd_rf_respond_scan_message(void) {
 	respondStructer->channel = device_config.rf_channel;
 
 	LinkSend(SourceAddress, LINK_DEVICE_SCAN_RESPONSE, buffer, sizeof(buffer));
-	// 等待无线信号发送完成
+// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -477,7 +482,7 @@ void imd_rf_setnetPar_deal(struct LinkMessage *message) {
 	LinkSetAreaId(device_config.net_config.LinkArealId); // 设置区域地址
 
 	LinkSend(SourceAddress, MESSAGE_TP_SET_NP_REQ, &errorCode, 1);
-	// 等待无线信号发送完成
+// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -520,7 +525,7 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
 	arrayS[8] = (uint8_t)(device_config.net_config.LinkArealId);
 
 	LinkSend(SourceAddress, MESSAGE_TP_GET_NP_REQ, arrayS, 9);
-	// 等待无线信号发送完成
+// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -576,7 +581,7 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 	imd_config_restore();
 
 	LinkSend(SourceAddress, MESSAGE_TP_SET_MTP_REQ, &errorCode, 1);
-	// 等待无线信号发送完成
+// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -621,7 +626,7 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 	arrayS[10] = (uint8_t)(device_config.ctr_config.send_peroid);
 
 	LinkSend(SourceAddress, MESSAGE_TP_GET_MTP_REQ, arrayS, 11);
-	// 等待无线信号发送完成
+// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -660,7 +665,7 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 				imd_config_restore();
 				HalRFSetChannel(HalRF1, device_config.rf_channel);
 
-				LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 11);
+				LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 1);
 				// 等待无线信号发送完成
 				while (0 == Hal_RfTxComplete) {
 					;
