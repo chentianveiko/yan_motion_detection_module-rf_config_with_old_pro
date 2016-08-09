@@ -30,7 +30,7 @@
 #define CLK_TYPE_HSE  4
 
 // 开机后的参数配置时间
-#define CONFIG_TIME_RESTART           60                // 重启后的配置时间，单位秒
+#define CONFIG_TIME_RESTART           120                // 重启后的配置时间，单位秒
 
 // 设备默认参数定义
 #define FLASH_INIT_FLAG_VALUE         0x3A5A9AAA        // 设备参数初始化标志
@@ -53,6 +53,7 @@
 #define MESSAGE_TP_GET_NP_REQ             0x21    // 获取网络参数命令类型(运动探测和无线开关有效)
 #define MESSAGE_TP_SET_MTP_REQ            0x22    // 设置运动探测控制参数命令类型(仅运动探测模块有效)
 #define MESSAGE_TP_GET_MTP_REQ            0x23    // 获取运动探测控制参数命令类型(仅运动探测模块有效)
+#define MESSAGE_TP_TERMINAL_CONFIG_REQ    0x24    // 退出配置循环指令
 #define LIGHT_CONTROL_PACKET              0x01
 #define LIGHT_GROUP_CONTROL_PACKET        0x02
 #define LIGHT_IR_CONTROL                  0x03
@@ -125,6 +126,7 @@ typedef struct {
 
 extern LinkAddr_t SourceAddress;
 extern imd_config_t device_config;
+extern bool ifEndConfigFlag;
 
 void SystemClockInit(uint8_t Clk_Sel);
 void ConfigLoop(void);
