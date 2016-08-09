@@ -312,7 +312,7 @@ void ConfigLoop(void) {
 			time_last = HalgetRunTimerCnt(GenRunTimerID);
 			if (ifEnabledUart == true) {
 				debug_log("[beautiful note]--config loop time remain:%d seconds!\r\n", (int) time_last);
-				debug_log("[beautiful note]--rand value is:%d!\r\n", (int) rand_value);
+				//debug_log("[beautiful note]--rand value is:%d!\r\n", (int) rand_value);
 			}
 		}
 		if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
@@ -527,7 +527,7 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
 
 	Hal_RfTxComplete = 0;
 
-	if (message->length < 12) {
+	if (message->length >= 12) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
@@ -578,7 +578,7 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 
 	Hal_RfTxComplete = 0;
 
-	if (message->length < 22) {
+	if (message->length >= 22) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
@@ -638,7 +638,7 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 
 	Hal_RfTxComplete = 0;
 
-	if (message->length < 12) {
+	if (message->length >= 12) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
@@ -694,21 +694,22 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 	if (message->length < 13) {
 		return;
 	} else {
-		if (ifEnabledUart == true) {
+
+		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
+          if (ifEnabledUart == true) {
 			debug_log("received rf channel setting message!\r\n");
 		}
-		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
 			if (message->data[12] < HAL_RF_CHANNEL_NB) {            // 判断信道值是否合法
 				device_config.rf_channel = (HalRFChannel_t) message->data[12];       // 读取并设置信道
 				imd_config_restore();
-				HalRFSetChannel(HalRF1, device_config.rf_channel);
+                LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 1);
 
-				LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 1);
 				// 等待无线信号发送完成
 				while (0 == Hal_RfTxComplete) {
 					;
 				}
 				Hal_RfTxComplete = 0;
+                HalRFSetChannel(HalRF1, device_config.rf_channel);
 			}
 		}
 	}

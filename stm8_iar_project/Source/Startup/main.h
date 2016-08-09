@@ -40,8 +40,8 @@
 #define IMD_LINK_GROUP_ID_DEFAULT     1                 // 默认组ID
 #define IMD_RF_CHANNEL_DEFAULT        HAL_RF_CHANNEL_0  // 默认RF使用的信道
 #define IMD_LIGHT_LV_DEFAULT          100               // 默认的运动探测调光亮度
-#define IMD_LIGHT_SEND_PERIOD_DEFAULT 5                // 默认的运动探测发送最小周期30秒(解发开灯动作的最小间隔)
-#define IMD_LIGHT_ON_SECOND_DEFAULT   2               // 默认的开灯点亮时间为120秒
+#define IMD_LIGHT_SEND_PERIOD_DEFAULT 20                // 默认的运动探测发送最小周期30秒(解发开灯动作的最小间隔)
+#define IMD_LIGHT_ON_SECOND_DEFAULT   3               // 默认的开灯点亮时间为120秒
 
 // 设备类型定义
 #define DEV_TP_LAMP_CONTROLLER  0x00    // 设备类型--灯控制器

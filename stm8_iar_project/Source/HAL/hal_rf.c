@@ -91,148 +91,168 @@
 
 #if (HAL_RF_DATE_RATE == HAL_RF_DATE_RATE_0_5KBPS)
 /* A7139 433.201M DR0.5kbps IFBW50kHz Fdev18.75kHz@12.8M -123dBm */
-const uint16_t A7139Config[] = { 0xC623, /* SYSTEM CLOCK register,   */
-0x0A21, /* PLL1 register,           */
-0xDA05, /* PLL2 register,	      */
-0x0000, /* PLL3 register,           */
-0x0A20, /* PLL4 register,           */
-0x0024, /* PLL5 register,           */
-0x0000, /* PLL6 register,           */
-0x0011, /* CRYSTAL register,        */
-0x0000, /* PAGEA,                   */
-0x0000, /* PAGEB,                   */
-0x18D0, /* RX1 register, 	      */
-0x7009, /* RX2 register, 	      */
-0x4000, /* ADC register,	      */
-0x0800, /* PIN CONTROL register,    */
-0x4C45, /* CALIBRATION register,    */
-0x20C0, /* MODE CONTROL register,   */
+const uint16_t A7139Config[]=
+{
+  0xC623, /* SYSTEM CLOCK register,   */
+  0x0A21, /* PLL1 register,           */
+  0xDA05, /* PLL2 register,	      */
+  0x0000, /* PLL3 register,           */
+  0x0A20, /* PLL4 register,           */
+  0x0024, /* PLL5 register,           */
+  0x0000, /* PLL6 register,           */
+  0x0011, /* CRYSTAL register,        */
+  0x0000, /* PAGEA,                   */
+  0x0000, /* PAGEB,                   */
+  0x18D0, /* RX1 register, 	      */
+  0x7009, /* RX2 register, 	      */
+  0x4000, /* ADC register,	      */
+  0x0800, /* PIN CONTROL register,    */
+  0x4C45, /* CALIBRATION register,    */
+  0x20C0, /* MODE CONTROL register,   */
 };
 
-const uint16_t A7139Config_PageA[] = { 0xF606, /* TX1 register,  */
-0x0000, /* WOR1 register, */
-0xF800, /* WOR2 register, */
-0x1107, /* RFI register,  */
-0x8970, /* PM register,   */
-0x0201, /* RTH register,  */
-0x400F, /* AGC1 register, */
-0x2AC0, /* AGC2 register, */
-0x0041, /* GIO register,  */
-0xD181, /* CKO register   */
-0x0004, /* VCB register,  */
-0x0A21, /* CHG1 register, */
-0x0022, /* CHG2 register, */
-FIFO_R, /* FIFO register, */
-0x1517, /* CODE register, */
-0x0000, /* WCAL register, */
+const uint16_t A7139Config_PageA[]=
+{
+  0xF606, /* TX1 register,  */
+  0x0000, /* WOR1 register, */
+  0xF800, /* WOR2 register, */
+  0x1107, /* RFI register,  */
+  0x8970, /* PM register,   */
+  0x0201, /* RTH register,  */
+  0x400F, /* AGC1 register, */
+  0x2AC0, /* AGC2 register, */
+  0x0041, /* GIO register,  */
+  0xD181, /* CKO register   */
+  0x0004, /* VCB register,  */
+  0x0A21, /* CHG1 register, */
+  0x0022, /* CHG2 register, */
+  FIFO_R, /* FIFO register, */
+  0x1517, /* CODE register, */
+  0x0000, /* WCAL register, */
 };
 
-const uint16_t A7139Config_PageB[] = { 0x0337, /* TX2 register */
-0x8200, /* IF1 register */
-0x0000, /* IF2 register */
-0x0000, /* ACK register */
-0x0000, /* ART register */
+const uint16_t A7139Config_PageB[]=
+{
+  0x0337, /* TX2 register */
+  0x8200, /* IF1 register */
+  0x0000, /* IF2 register */
+  0x0000, /* ACK register */
+  0x0000, /* ART register */
 };
 #endif
 
 #if (HAL_RF_DATE_RATE == HAL_RF_DATE_RATE_1_5KBPS)
 /* 433M 1.5Kbps Fdev=18.75kHz IFBW=48KHz Xtal12.8MHz */
-const uint16_t A7139Config[] = { 0x3EC7, /* SYSTEM CLOCK register,   */
-0x0A21, /* PLL1 register,           */
-0xDA05, /* PLL2 register,	      */
-0x0000, /* PLL3 register,           */
-0x0A20, /* PLL4 register,           */
-0x0024, /* PLL5 register,           */
-0x0000, /* PLL6 register,           */
-0x0003, /* CRYSTAL register,        */
-0x0000, /* PAGEA,                   */
-0x0000, /* PAGEB,                   */
-0x18D0, /* RX1 register, 	      */
-0x7009, /* RX2 register, 	      */
-0x4400, /* ADC register,	      */
-0x0800, /* PIN CONTROL register,    */
-0x4C45, /* CALIBRATION register,    */
-0x20C0, /* MODE CONTROL register,   */
+const uint16_t A7139Config[]=
+{
+  0x3EC7, /* SYSTEM CLOCK register,   */
+  0x0A21, /* PLL1 register,           */
+  0xDA05, /* PLL2 register,	      */
+  0x0000, /* PLL3 register,           */
+  0x0A20, /* PLL4 register,           */
+  0x0024, /* PLL5 register,           */
+  0x0000, /* PLL6 register,           */
+  0x0003, /* CRYSTAL register,        */
+  0x0000, /* PAGEA,                   */
+  0x0000, /* PAGEB,                   */
+  0x18D0, /* RX1 register, 	      */
+  0x7009, /* RX2 register, 	      */
+  0x4400, /* ADC register,	      */
+  0x0800, /* PIN CONTROL register,    */
+  0x4C45, /* CALIBRATION register,    */
+  0x20C0, /* MODE CONTROL register,   */
 };
 
-const uint16_t A7139Config_PageA[] = { 0xF606, /* TX1 register,  */
-0x0000, /* WOR1 register, */
-0xF800, /* WOR2 register, */
-0x1107, /* RFI register,  */
-0x0170, /* PM register,   */
-0x0201, /* RTH register,  */
-0x400F, /* AGC1 register, */
-0x2AC0, /* AGC2 register, */
-0xC041, /* GIO register,  */
-0xD283, /* CKO register   */
-0x0004, /* VCB register,  */
-0x0A21, /* CHG1 register, */
-0x0022, /* CHG2 register, */
-FIFO_R, /* FIFO register, */
-0x1517, /* CODE register, */
-0x0000, /* WCAL register, */
+const uint16_t A7139Config_PageA[]=
+{
+  0xF606, /* TX1 register,  */
+  0x0000, /* WOR1 register, */
+  0xF800, /* WOR2 register, */
+  0x1107, /* RFI register,  */
+  0x0170, /* PM register,   */
+  0x0201, /* RTH register,  */
+  0x400F, /* AGC1 register, */
+  0x2AC0, /* AGC2 register, */
+  0xC041, /* GIO register,  */
+  0xD283, /* CKO register   */
+  0x0004, /* VCB register,  */
+  0x0A21, /* CHG1 register, */
+  0x0022, /* CHG2 register, */
+  FIFO_R, /* FIFO register, */
+  0x1517, /* CODE register, */
+  0x0000, /* WCAL register, */
 };
 
-const uint16_t A7139Config_PageB[] = { 0x837F, /* TX2 register */
-0x81EC, /* IF1 register */
-0x0000, /* IF2 register */
-0x0000, /* ACK register */
-0x0000, /* ART register */
+const uint16_t A7139Config_PageB[]=
+{
+  0x837F, /* TX2 register */
+  0x81EC, /* IF1 register */
+  0x0000, /* IF2 register */
+  0x0000, /* ACK register */
+  0x0000, /* ART register */
 };
 #endif
 
 #if (HAL_RF_DATE_RATE == HAL_RF_DATE_RATE_10KBPS)
 /* 433MHz, 10kbps (IFBW = 100KHz, Fdev = 37.5KHz), Crystal=12.8MHz */
-const uint16_t A7139Config[] = { 0x1221, /* SYSTEM CLOCK register,   */
-0x0A21, /* PLL1 register,           */
-0xDA05, /* PLL2 register,	      */
-0x0000, /* PLL3 register,           */
-0x0A20, /* PLL4 register,           */
-0x0024, /* PLL5 register,           */
-0x0000, /* PLL6 register,           */
-0x0011, /* CRYSTAL register,        */
-0x0000, /* PAGEA,                   */
-0x0000, /* PAGEB,                   */
-0x18D4, /* RX1 register, 	      */
-0x7009, /* RX2 register, 	      */
-0x4000, /* ADC register,	      */
-0x0800, /* PIN CONTROL register,    */
-0x4C45, /* CALIBRATION register,    */
-0x20C0, /* MODE CONTROL register,   */
+const uint16_t A7139Config[]=
+{
+  0x1221, /* SYSTEM CLOCK register,   */
+  0x0A21, /* PLL1 register,           */
+  0xDA05, /* PLL2 register,	      */
+  0x0000, /* PLL3 register,           */
+  0x0A20, /* PLL4 register,           */
+  0x0024, /* PLL5 register,           */
+  0x0000, /* PLL6 register,           */
+  0x0011, /* CRYSTAL register,        */
+  0x0000, /* PAGEA,                   */
+  0x0000, /* PAGEB,                   */
+  0x18D4, /* RX1 register, 	      */
+  0x7009, /* RX2 register, 	      */
+  0x4000, /* ADC register,	      */
+  0x0800, /* PIN CONTROL register,    */
+  0x4C45, /* CALIBRATION register,    */
+  0x20C0, /* MODE CONTROL register,   */
 };
 
-const uint16_t A7139Config_PageA[] = { 0xF706, /* TX1 register,   */
-0x0000, /* WOR1 register,  */
-0xF800, /* WOR2 register,  */
-0x1107, /* RFI register,   */
-0x8170, /* PM register,    */
-0x0201, /* RTH register,   */
-0x400F, /* AGC1 register,  */
-0x2AC0, /* AGC2 register,  */
-0x0045, /* GIO register,   */
-0xD181, /* CKO register    */
-0x0004, /* VCB register,   */
-0x0A21, /* CHG1 register,  */
-0x0022, /* CHG2 register,  */
-FIFO_R, /* FIFO register,  */
-0x1517, /* CODE register,  */
-0x0000, /* WCAL register,  */
+const uint16_t A7139Config_PageA[]=
+{
+  0xF706, /* TX1 register,   */
+  0x0000, /* WOR1 register,  */
+  0xF800, /* WOR2 register,  */
+  0x1107, /* RFI register,   */
+  0x8170, /* PM register,    */
+  0x0201, /* RTH register,   */
+  0x400F, /* AGC1 register,  */
+  0x2AC0, /* AGC2 register,  */
+  0x0045, /* GIO register,   */
+  0xD181, /* CKO register    */
+  0x0004, /* VCB register,   */
+  0x0A21, /* CHG1 register,  */
+  0x0022, /* CHG2 register,  */
+  FIFO_R, /* FIFO register,  */
+  0x1517, /* CODE register,  */
+  0x0000, /* WCAL register,  */
 };
 
-const uint16_t A7139Config_PageB[] = { 0x037F, /* TX2 register, */
-0x8400, /* IF1 register, */
-0x0000, /* IF2 register, */
-0x0000, /* ACK register, */
-0x0000, /* ART register, */
+const uint16_t A7139Config_PageB[]=
+{
+  0x037F, /* TX2 register, */
+  0x8400, /* IF1 register, */
+  0x0000, /* IF2 register, */
+  0x0000, /* ACK register, */
+  0x0000, /* ART register, */
 };
 #endif
 
-const uint16_t A7139ChannelValues[HAL_RF_CHANNEL_NB] = { 0xDA05, /* 433MHz */
-0xB205, /* 431MHz */
-0x8A05, /* 429MHz */
-0x6205, /* 427MHz */
-0x3A05, /* 425MHz */
-0x1205, /* 423MHz */
+const uint16_t A7139ChannelValues[HAL_RF_CHANNEL_NB] =
+{
+  0xDA05, /* 433MHz */
+  0xB205, /* 431MHz */
+  0x8A05, /* 429MHz */
+  0x6205, /* 427MHz */
+  0x3A05, /* 425MHz */
+  0x1205, /* 423MHz */
 };
 
 /*
