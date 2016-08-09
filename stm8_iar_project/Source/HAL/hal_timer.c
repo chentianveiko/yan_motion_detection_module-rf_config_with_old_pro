@@ -113,7 +113,7 @@ void HalRunTimerFuncMS(void) {
  函数返回: 对应的超时定时器的cnt值
  *********************************************************************************
  */
-uint8_t HalgetRunTimerCnt(uint8_t runTimerID) {
+uint32_t HalgetRunTimerCnt(uint8_t runTimerID) {
 	return runTimerArray[runTimerID].cnt;
 }
 
@@ -127,13 +127,13 @@ uint8_t HalgetRunTimerCnt(uint8_t runTimerID) {
  函数返回: None
  *********************************************************************************
  */
-void HalRestartRunTimer(uint8_t runTimerID, uint8_t timeset, uint8_t runtype) {
-  disableInterrupts();
+void HalRestartRunTimer(uint8_t runTimerID, uint32_t timeset, uint8_t runtype) {
+	disableInterrupts();
 	runTimerArray[runTimerID].active = false;
 	runTimerArray[runTimerID].type = runtype;
 	runTimerArray[runTimerID].cnt = (timeset == 0) ? runTimerArray[runTimerID].cnt : timeset;
 	runTimerArray[runTimerID].active = true;
-    enableInterrupts();
+	enableInterrupts();
 }
 
 /*

@@ -29,8 +29,8 @@ void HalTIM4_Config(void);
 void HalRunTimerFuncS(void);
 void HalRunTimerFuncMS(void);
 void HalTIM4_interrupt_callback(void);
-uint8_t HalgetRunTimerCnt(uint8_t runTimerID);
-void HalRestartRunTimer(uint8_t runTimerID, uint8_t timeset, uint8_t runtype);
+uint32_t HalgetRunTimerCnt(uint8_t runTimerID);
+void HalRestartRunTimer(uint8_t runTimerID, uint32_t timeset, uint8_t runtype);
 
 #endif
 
