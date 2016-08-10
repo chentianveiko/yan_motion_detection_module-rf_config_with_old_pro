@@ -42,8 +42,6 @@ void HalUartConfigInit(void) {
 	USART_ITConfig(UART_CONFIG, USART_IT_TC, DISABLE);
 
 	USART_Cmd(UART_CONFIG, ENABLE);
-
-	ifEnabledUart = true;
 }
 
 void HalUartConfigEnterSleep(void) {

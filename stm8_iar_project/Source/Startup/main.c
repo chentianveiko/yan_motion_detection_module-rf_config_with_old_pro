@@ -162,8 +162,8 @@ static void IrLightControl(uint8_t group, uint8_t level, uint32_t seconds) {
  */
 void MainLooper(void) {
 	bool ifNeedSend = false;
-	Hal_RfTxComplete = 0;
 
+	Hal_RfTxComplete = 0;
 	while (1) {
 		HAL_MCU_ENTER_SLEEP();   // 进入睡眠模式，等待硬件唤醒
 		HAL_MCU_EXIT_SLEEP();    // 退出睡眠模式，并进行相关必要的配置程序
@@ -222,6 +222,7 @@ void MainLooper(void) {
 				debug_log("send a lamp ctr message,gid-%d,arealid-%d!\r\n", (int) device_config.ctr_config.groupId,
 						(int) device_config.net_config.LinkArealId);
 			}
+
 			// 等待无线信号发送完成
 			while (0 == Hal_RfTxComplete) {
 				;
@@ -319,11 +320,10 @@ void ConfigLoop(void) {
 			break;
 		}
 
-        if(ifEndConfigFlag == true)
-        {
-          ifEndConfigFlag = false;
-          break;
-        }
+		if (ifEndConfigFlag == true) {
+			ifEndConfigFlag = false;
+			break;
+		}
 	}
 	if (ifEnabledUart == true) {
 		debug_log("[beautiful note]--enter main application loop!\r\n");
@@ -378,9 +378,9 @@ static void rf_data_receive_handler(struct LinkMessage *message) {
 		imd_rf_setrfChannel(message);
 		break;
 
-        // 退出配置循环
-    case MESSAGE_TP_TERMINAL_CONFIG_REQ:
-        ifEndConfigFlag = true;
+		// 退出配置循环
+	case MESSAGE_TP_TERMINAL_CONFIG_REQ:
+		ifEndConfigFlag = true;
 		if (ifEnabledUart == true) {
 			debug_log("[beautiful note]--received exit config loop command!\r\n");
 		}
@@ -408,11 +408,12 @@ void imd_rf_respond_scan_message(void) {
 	ScanResponse_t *respondStructer;
 	uint8_t buffer[sizeof(ScanResponse_t)];
 
+	Hal_RfTxComplete = 0;
+
 	if (ifEnabledUart == true) {
 		debug_log("received scan message!\r\n");
 	}
 
-	Hal_RfTxComplete = 0;
 	rand_value = hw_board_random_get();
 	rand_value = (rand_value % 100) + (rand_value * 100 % 2000);
 	HalRestartRunTimer(FunctionTimerID, rand_value, RT_TP_MSECOND);
@@ -439,7 +440,7 @@ void imd_rf_respond_scan_message(void) {
 	respondStructer->channel = device_config.rf_channel;
 
 	LinkSend(SourceAddress, LINK_DEVICE_SCAN_RESPONSE, buffer, sizeof(buffer));
-// 等待无线信号发送完成
+	// 等待无线信号发送完成
 	while (0 == Hal_RfTxComplete) {
 		;
 	}
@@ -464,48 +465,49 @@ void imd_rf_setnetPar_deal(struct LinkMessage *message) {
 	hw_mcu_unique_id_t UID_array;
 
 	Hal_RfTxComplete = 0;
-	if (message->length < 20) {
-		return;
+
+	if (message->length >= 20) {
+		HW_MCU_READ_DEVICE_ID(UID_array);
+		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
+			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+			if (ifEnabledUart == true) {
+				debug_log("received net par setting message!\r\n");
+			}
+
+			device_config.net_config.LinkAddr = message->data[12];
+			device_config.net_config.LinkAddr <<= 8;
+			device_config.net_config.LinkAddr += message->data[13];
+
+			device_config.net_config.LinkNetId = message->data[14];
+			device_config.net_config.LinkNetId <<= 8;
+			device_config.net_config.LinkNetId += message->data[15];
+
+			device_config.net_config.LinkArealId = message->data[16];
+			device_config.net_config.LinkArealId <<= 8;
+			device_config.net_config.LinkArealId += message->data[17];
+			device_config.net_config.LinkArealId <<= 8;
+			device_config.net_config.LinkArealId += message->data[18];
+			device_config.net_config.LinkArealId <<= 8;
+			device_config.net_config.LinkArealId += message->data[19];
+			device_config.net_config.enableRoute = FALSE;
+
+			imd_config_restore();
+
+			LinkSend(SourceAddress, MESSAGE_TP_SET_NP_REQ, &errorCode, 1);
+			while (0 == Hal_RfTxComplete) { // 等待无线信号发送完成
+				;
+			}
+			Hal_RfTxComplete = 0;
+
+			LinkSetAddress(device_config.net_config.LinkAddr);   // 设置设备地址
+			LinkSetNetId(device_config.net_config.LinkNetId);    // 设置网络地址
+			LinkSetAreaId(device_config.net_config.LinkArealId); // 设置区域地址
+		}
 	}
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 
-	HW_MCU_READ_DEVICE_ID(UID_array);
-	if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
-		HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-		if (ifEnabledUart == true) {
-			debug_log("received net par setting message!\r\n");
-		}
-
-		device_config.net_config.LinkAddr = message->data[12];
-		device_config.net_config.LinkAddr <<= 8;
-		device_config.net_config.LinkAddr += message->data[13];
-
-		device_config.net_config.LinkNetId = message->data[14];
-		device_config.net_config.LinkNetId <<= 8;
-		device_config.net_config.LinkNetId += message->data[15];
-
-		device_config.net_config.LinkArealId = message->data[16];
-		device_config.net_config.LinkArealId <<= 8;
-		device_config.net_config.LinkArealId += message->data[17];
-		device_config.net_config.LinkArealId <<= 8;
-		device_config.net_config.LinkArealId += message->data[18];
-		device_config.net_config.LinkArealId <<= 8;
-		device_config.net_config.LinkArealId += message->data[19];
-		device_config.net_config.enableRoute = FALSE;
-
-		imd_config_restore();
-
-		LinkInit();
-		LinkSetAddress(device_config.net_config.LinkAddr);   // 设置设备地址
-		LinkSetNetId(device_config.net_config.LinkNetId);    // 设置网络地址
-		LinkSetAreaId(device_config.net_config.LinkArealId); // 设置区域地址
-
-		LinkSend(SourceAddress, MESSAGE_TP_SET_NP_REQ, &errorCode, 1);
-		// 等待无线信号发送完成
-		while (0 == Hal_RfTxComplete) {
-			;
-		}
-		Hal_RfTxComplete = 0;
-		HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("set net par end!\r\n");
 	}
 }
 /*
@@ -549,13 +551,15 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
 			arrayS[8] = (uint8_t)(device_config.net_config.LinkArealId);
 
 			LinkSend(SourceAddress, MESSAGE_TP_GET_NP_REQ, arrayS, 9);
-			// 等待无线信号发送完成
-			while (0 == Hal_RfTxComplete) {
+			while (0 == Hal_RfTxComplete) {   // 等待无线信号发送完成
 				;
 			}
 			Hal_RfTxComplete = 0;
-			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 		}
+	}
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("get net par end!\r\n");
 	}
 }
 /*
@@ -573,7 +577,6 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
  */
 void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 	uint8_t errorCode = 0;
-
 	hw_mcu_unique_id_t UID_array;
 
 	Hal_RfTxComplete = 0;
@@ -606,17 +609,18 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 			device_config.ctr_config.send_peroid += message->data[20];
 			device_config.ctr_config.send_peroid <<= 8;
 			device_config.ctr_config.send_peroid += message->data[21];
-
 			imd_config_restore();
 
 			LinkSend(SourceAddress, MESSAGE_TP_SET_MTP_REQ, &errorCode, 1);
-			// 等待无线信号发送完成
-			while (0 == Hal_RfTxComplete) {
+			while (0 == Hal_RfTxComplete) {  // 等待无线信号发送完成
 				;
 			}
 			Hal_RfTxComplete = 0;
-			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 		}
+	}
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("set ctr par end!\r\n");
 	}
 }
 /*
@@ -637,7 +641,6 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 	hw_mcu_unique_id_t UID_array;
 
 	Hal_RfTxComplete = 0;
-
 	if (message->length >= 12) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
@@ -662,13 +665,15 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 			arrayS[10] = (uint8_t)(device_config.ctr_config.send_peroid);
 
 			LinkSend(SourceAddress, MESSAGE_TP_GET_MTP_REQ, arrayS, 11);
-			// 等待无线信号发送完成
-			while (0 == Hal_RfTxComplete) {
+			while (0 == Hal_RfTxComplete) {   // 等待无线信号发送完成
 				;
 			}
 			Hal_RfTxComplete = 0;
-			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 		}
+	}
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("get ctr par end!\r\n");
 	}
 }
 /*
@@ -687,33 +692,33 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 void imd_rf_setrfChannel(struct LinkMessage *message) {
 	hw_mcu_unique_id_t UID_array;
 
-	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 	Hal_RfTxComplete = 0;
+
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 	HW_MCU_READ_DEVICE_ID(UID_array);
 
-	if (message->length < 13) {
-		return;
-	} else {
-
+	if (message->length >= 13) {
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
-          if (ifEnabledUart == true) {
-			debug_log("received rf channel setting message!\r\n");
-		}
+			if (ifEnabledUart == true) {
+				debug_log("received rf channel setting message!\r\n");
+			}
 			if (message->data[12] < HAL_RF_CHANNEL_NB) {            // 判断信道值是否合法
 				device_config.rf_channel = (HalRFChannel_t) message->data[12];       // 读取并设置信道
 				imd_config_restore();
-                LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 1);
 
-				// 等待无线信号发送完成
-				while (0 == Hal_RfTxComplete) {
+				LinkSend(SourceAddress, LINK_SET_CHANNEL_RES, (uint8_t *) (&device_config.rf_channel), 1);
+				while (0 == Hal_RfTxComplete) {       // 等待无线信号发送完成
 					;
 				}
 				Hal_RfTxComplete = 0;
-                HalRFSetChannel(HalRF1, device_config.rf_channel);
+				HalRFSetChannel(HalRF1, device_config.rf_channel);
 			}
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("set rf channel par end!\r\n");
+	}
 }
 /*
  *******************************************************************************

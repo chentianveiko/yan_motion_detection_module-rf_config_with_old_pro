@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=657601481
+Checksum=-989053201
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -35,14 +35,13 @@ LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\main.c}.102.3" 0 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.583.3" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.584.4" 1 0 0 0 "" 0 ""
-Bp3=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.478.3" 1 0 0 0 "" 0 ""
-Bp4=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.650.4" 1 0 0 0 "" 0 ""
-Bp5=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.641.2" 1 0 0 0 "" 0 ""
-Bp6=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.644.4" 1 0 0 0 "" 0 ""
-Bp7=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.643.3" 1 0 0 0 "" 0 ""
-Count=8
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.358.3" 1 0 0 0 "" 0 ""
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.363.3" 1 0 0 0 "" 0 ""
+Bp3=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.373.3" 1 0 0 0 "" 0 ""
+Bp4=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.383.3" 1 0 0 0 "" 0 ""
+Bp5=_ "STD_CODE" "{$PROJ_DIR$\..\Source\HAL\hal_rf.c}.912.3" 1 0 0 0 "" 0 ""
+Bp6=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.349.2" 1 0 0 0 "" 0 ""
+Count=7
 [Aliases]
 A0=_ "E:\Veiko-Workspace\ChenTian\workspace\MotionDetection\ir_svn\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""
 A1=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\HAL\hal_rf.c" ""
