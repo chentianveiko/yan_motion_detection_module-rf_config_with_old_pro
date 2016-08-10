@@ -260,6 +260,7 @@ int main(void) {
 	disableInterrupts();
 	spi_init();
 	HalRFInit();
+	Hal_led_init();
 
 	enableInterrupts();
 
@@ -306,7 +307,12 @@ void ConfigLoop(void) {
 	uint32_t rand_value;
 
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);
+	HalRestartRunTimer(LED_FlashTimerID, LED_Flash_Interval, RT_TP_MSECOND);
 	while (1) {
+		if (HalgetRunTimerCnt(LED_FlashTimerID) == 0) {
+			HalRestartRunTimer(LED_FlashTimerID, LED_Flash_Interval, RT_TP_MSECOND);
+			HAL_LED_RED_Toggle();
+		}
 
 		rand_value = hw_board_random_get();
 		if (time_last != HalgetRunTimerCnt(GenRunTimerID)) {
@@ -325,6 +331,8 @@ void ConfigLoop(void) {
 			break;
 		}
 	}
+
+    HAL_LED_RED_OFF();
 	if (ifEnabledUart == true) {
 		debug_log("[beautiful note]--enter main application loop!\r\n");
 	}

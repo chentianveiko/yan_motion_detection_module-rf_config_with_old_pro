@@ -34,12 +34,12 @@ void HalMcuEnterSleep(void) {
 	GPIO_Init(GPIOB, GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
 
-	GPIO_Init(GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7,
-			GPIO_Mode_Out_PP_Low_Slow);
+	GPIO_Init(GPIOD, GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOE, GPIO_Pin_All, GPIO_Mode_Out_PP_Low_Slow);
 	GPIO_Init(GPIOF, GPIO_Pin_0, GPIO_Mode_Out_PP_Low_Slow);
 
 	enableInterrupts();
+	HAL_LED_RED_OFF();
 
 	//SystemClockInit(CLK_TYPE_LSE); // 为了进入Active halt模式，切换时钟到LSE
 	SystemClockInit (CLK_TYPE_LSI); // 为了进入Active halt模式，切换时钟到LSE
@@ -61,6 +61,7 @@ void HalMcuExitSleep(void) {
 	spi_exit_sleep();
 	HalRFExitSleep (HalRF1);
 
+	ifEnabledUart = false;
 	if (ifEnabledUart == true) {
 		HalUartConfigExitSleep();
 	}

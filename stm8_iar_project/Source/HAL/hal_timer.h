@@ -4,9 +4,10 @@
 #include "stm8l15x.h"
 #include "stdbool.h"
 
-#define MAX_RUN_TIMER_NUM 2  // 用于设置超时定时器的个数
+#define MAX_RUN_TIMER_NUM 3  // 用于设置超时定时器的个数
 #define GenRunTimerID     0  // 普通超时定时器ID
 #define FunctionTimerID   1  // 普通函数中使用的超时定时器
+#define LED_FlashTimerID  2
 
 #define RT_TP_SECOND      0   // 超时定时器采用秒为单位
 #define RT_TP_MSECOND     1   // 超时定时器采用毫秒为单位

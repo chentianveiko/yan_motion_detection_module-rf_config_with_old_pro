@@ -1967,6 +1967,12 @@
       <name>$PROJ_DIR$\..\Source\HAL\hal_key.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\Source\HAL\hal_led.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Source\HAL\hal_led.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_mcu.c</name>
     </file>
     <file>

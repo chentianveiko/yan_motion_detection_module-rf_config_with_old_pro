@@ -14,6 +14,7 @@
 #include "hal_rtc.h"
 #include "hal_flash_app.h"
 #include "hal_mcu.h"
+#include "hal_led.h"
 
 /* 是否开启串口调试输出 1表示开启 非1表示关闭 */
 #define UsartDebug 0
@@ -31,6 +32,7 @@
 
 // 开机后的参数配置时间
 #define CONFIG_TIME_RESTART           120                // 重启后的配置时间，单位秒
+#define LED_Flash_Interval            500                // 配置模式下LED闪烁间隔(1/2闪烁周期时间)
 
 // 设备默认参数定义
 #define FLASH_INIT_FLAG_VALUE         0x3A5A9AAA        // 设备参数初始化标志
