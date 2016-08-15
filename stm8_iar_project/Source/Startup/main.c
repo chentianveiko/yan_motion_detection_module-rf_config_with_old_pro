@@ -239,8 +239,8 @@ void MainLooper(void) {
 					}
 				}
 				if (HalgetRunTimerCnt(GenRunTimerID) != 0) {
-					break;
 					Hal_RfTxComplete = 0;
+					break;
 				}
 				Hal_RfTxComplete = 0;
 			}
@@ -406,6 +406,11 @@ static void rf_data_receive_handler(struct LinkMessage *message) {
 		if (ifEnabledUart == true) {
 			debug_log("[beautiful note]--received exit config loop command!\r\n");
 		}
+		break;
+
+		// 空中升级
+	case LINK_ENTER_BOOTLOADER:
+
 		break;
 
 	default:
@@ -747,6 +752,50 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 }
 /*
  *******************************************************************************
+ @brief    进入Bootloader
+
+ @params   message -- rf接收到的消息指针
+
+ @author   Veiko
+
+ @time     2016-8-5
+
+ @return   无
+ *******************************************************************************
+ */
+void imd_rf_enterBootloader(struct LinkMessage *message) {
+	hw_mcu_unique_id_t UID_array;
+
+	Hal_RfTxComplete = 0;
+
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	HW_MCU_READ_DEVICE_ID(UID_array);
+
+	if (message->length >= 13) {
+		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
+			if (ifEnabledUart == true) {
+				debug_log("received enter bootloader message!\r\n");
+			}
+			if (message->data[12] < HAL_RF_CHANNEL_NB) {            // 判断信道值是否合法
+				device_config.boot_rf_channel = (HalRFChannel_t) message->data[12];       // 读取并设置信道
+				imd_config_restore();
+
+				LinkSend(SourceAddress, LINK_ENTER_BOOTLOADER_RES, (uint8_t *) (&device_config.boot_rf_channel), 1);
+				while (0 == Hal_RfTxComplete) {       // 等待无线信号发送完成
+					;
+				}
+				Hal_RfTxComplete = 0;
+				asm("jp $8000");
+			}
+		}
+	}
+	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
+	if (ifEnabledUart == true) {
+		debug_log("set rf channel par end!\r\n");
+	}
+}
+/*
+ *******************************************************************************
  @brief    加载设备参数
 
  @params   none
@@ -775,6 +824,7 @@ void imd_config_load(void) {
 		device_config.ctr_config.groupId = IMD_LINK_GROUP_ID_DEFAULT;
 		device_config.ctr_config.ON_seconds = IMD_LIGHT_ON_SECOND_DEFAULT;
 		device_config.ctr_config.send_peroid = IMD_LIGHT_SEND_PERIOD_DEFAULT;
+		device_config.boot_rf_channel = IMD_BOOT_RF_CHANNEL_DEFAULT;
 
 		HalFlashWrite(HAL_MCU_FLASH_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 	} else {

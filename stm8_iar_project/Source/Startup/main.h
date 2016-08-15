@@ -41,6 +41,7 @@
 #define IMD_LINK_AREAL_ID_DEFAULT     4                 // 默认区域地址
 #define IMD_LINK_GROUP_ID_DEFAULT     1                 // 默认组ID
 #define IMD_RF_CHANNEL_DEFAULT        HAL_RF_CHANNEL_0  // 默认RF使用的信道
+#define IMD_BOOT_RF_CHANNEL_DEFAULT   HAL_RF_CHANNEL_0  // 默认Boot使用的RF信道
 #define IMD_LIGHT_LV_DEFAULT          100               // 默认的运动探测调光亮度
 #define IMD_LIGHT_SEND_PERIOD_DEFAULT 20                // 默认的运动探测发送最小周期30秒(解发开灯动作的最小间隔)
 #define IMD_LIGHT_ON_SECOND_DEFAULT   3               // 默认的开灯点亮时间为120秒
@@ -124,7 +125,13 @@ typedef struct {
 	LinkParDef net_config;
 	LightParDef ctr_config;
 	HalRFChannel_t rf_channel;      // 设备使用的RF信道
+	HalRFChannel_t boot_rf_channel;// 用于升级的信道
 }imd_config_t;
+
+typedef struct {
+	hw_mcu_unique_id_t uniqueId;
+	uint8_t rfChannel;
+} EnterBLCommand_t;
 
 extern LinkAddr_t SourceAddress;
 extern imd_config_t device_config;
@@ -142,6 +149,7 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message);
 void imd_rf_setlightPar_deal(struct LinkMessage *message);
 void imd_rf_getlightPar_deal(struct LinkMessage *message);
 void imd_rf_setrfChannel(struct LinkMessage *message);
+void imd_rf_enterBootloader(struct LinkMessage *message);
 
 #endif
 
