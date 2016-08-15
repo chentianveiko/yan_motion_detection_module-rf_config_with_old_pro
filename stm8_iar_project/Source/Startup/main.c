@@ -4,6 +4,8 @@
  *******************************************************************************
  */
 #include "main.h"
+#include "string.h"
+#include "stdio.h"
 
 /*
  *******************************************************************************
@@ -202,19 +204,24 @@ void MainLooper(void) {
 					debug_log("infrared pin is low!\r\n");
 				}
 			}
+
+			HalResetRtcAlarm();
 		}
 
 		// 发送灯控信号
 		if (ifNeedSend == true) {
 			ifNeedSend = false;
 			// 保存本次发送的唤醒时间,以用作下次唤醒后判断
-			RTC_DateStr_bck.RTC_Date = RTC_DateStr.RTC_Date;
-			RTC_DateStr_bck.RTC_Month = RTC_DateStr.RTC_Month;
-			RTC_DateStr_bck.RTC_Year = RTC_DateStr.RTC_Year;
+			/*RTC_DateStr_bck.RTC_Date = RTC_DateStr.RTC_Date;
+			 RTC_DateStr_bck.RTC_Month = RTC_DateStr.RTC_Month;
+			 RTC_DateStr_bck.RTC_Year = RTC_DateStr.RTC_Year;
 
-			RTC_TimeStr_bck.RTC_Hours = RTC_TimeStr.RTC_Hours;
-			RTC_TimeStr_bck.RTC_Minutes = RTC_TimeStr.RTC_Minutes;
-			RTC_TimeStr_bck.RTC_Seconds = RTC_TimeStr.RTC_Seconds;
+			 RTC_TimeStr_bck.RTC_Hours = RTC_TimeStr.RTC_Hours;
+			 RTC_TimeStr_bck.RTC_Minutes = RTC_TimeStr.RTC_Minutes;
+			 RTC_TimeStr_bck.RTC_Seconds = RTC_TimeStr.RTC_Seconds;*/
+
+			memcpy(&RTC_DateStr_bck, &RTC_DateStr, sizeof(RTC_DateTypeDef));
+			memcpy(&RTC_TimeStr_bck, &RTC_TimeStr, sizeof(RTC_TimeTypeDef));
 
 			IrLightControl(device_config.ctr_config.groupId, device_config.ctr_config.Leval, (device_config.ctr_config.ON_seconds) * 1000); // 发送分组灯控制信号，其中10000是灯开的延时，超过这个时间后，回复到灯的前一个状态
 
@@ -224,10 +231,19 @@ void MainLooper(void) {
 			}
 
 			// 等待无线信号发送完成
-			while (0 == Hal_RfTxComplete) {
-				;
+			for (uint8_t i = 0; i < 3; i++) {
+				HalRestartRunTimer(GenRunTimerID, 4, RT_TP_SECOND);
+				while (0 == Hal_RfTxComplete) {
+					if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
+						break;
+					}
+				}
+				if (HalgetRunTimerCnt(GenRunTimerID) != 0) {
+					break;
+					Hal_RfTxComplete = 0;
+				}
+				Hal_RfTxComplete = 0;
 			}
-			Hal_RfTxComplete = 0;
 
 			// 发送完成后需要重新设置RTC闹钟以达到同步的目的
 			HalResetRtcAlarm();
@@ -259,14 +275,12 @@ int main(void) {
 	}
 	disableInterrupts();
 	spi_init();
+	imd_config_load();
 	HalRFInit();
+	HalRFSetChannel(HalRF1, device_config.rf_channel);
 	Hal_led_init();
 
 	enableInterrupts();
-
-	imd_config_load();
-
-	HalRFSetChannel(HalRF1, device_config.rf_channel);
 
 	LinkInit();
 	LinkSetAddress((int) device_config.net_config.LinkAddr);   // 设置设备地址
@@ -332,7 +346,7 @@ void ConfigLoop(void) {
 		}
 	}
 
-    HAL_LED_RED_OFF();
+	HAL_LED_RED_OFF();
 	if (ifEnabledUart == true) {
 		debug_log("[beautiful note]--enter main application loop!\r\n");
 	}
@@ -719,7 +733,10 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 					;
 				}
 				Hal_RfTxComplete = 0;
+				disableInterrupts();
+				HalRFInit();
 				HalRFSetChannel(HalRF1, device_config.rf_channel);
+				enableInterrupts();
 			}
 		}
 	}
