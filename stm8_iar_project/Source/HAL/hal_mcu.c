@@ -7,7 +7,7 @@
 #include "virtual_spi.h"
 #include "hal_rf.h"
 #include "hal_key.h"
-#include "hal_uart.h"
+//#include "hal_uart.h"
 #include "hal_ir_sensor.h"
 #include "hal_flash.h"
 #include "../Startup/main.h"
@@ -22,10 +22,6 @@ void HalMcuEnterSleep(void) {
 	disableInterrupts();
 	HalRFEnterSleep (HalRF1);
 	spi_enter_sleep();
-	//HalKeyInit();
-	if (ifEnabledUart == true) {
-		HalUartConfigEnterSleep();
-	}
 
 	TIM4_Cmd (DISABLE);
 
@@ -60,11 +56,6 @@ void HalMcuExitSleep(void) {
 
 	spi_exit_sleep();
 	HalRFExitSleep (HalRF1);
-
-	ifEnabledUart = false;
-	if (ifEnabledUart == true) {
-		HalUartConfigExitSleep();
-	}
 
 	HalIRSensorInit();
 	HalFlashInit();

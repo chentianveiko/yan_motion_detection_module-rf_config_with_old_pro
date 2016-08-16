@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=560596146
+Checksum=-2146917495
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -35,11 +35,7 @@ LoggingEnabled=_ 0
 LogFile=_ ""
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\main.c}.102.3" 0 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.369.2" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.375.3" 1 0 0 0 "" 0 ""
-Bp3=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.385.3" 1 0 0 0 "" 0 ""
-Bp4=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.270.2" 1 0 0 0 "" 0 ""
-Count=5
+Count=1
 [Aliases]
 A0=_ "E:\Veiko-Workspace\ChenTian\workspace\MotionDetection\ir_svn\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""
 A1=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\HAL\hal_rf.c" ""

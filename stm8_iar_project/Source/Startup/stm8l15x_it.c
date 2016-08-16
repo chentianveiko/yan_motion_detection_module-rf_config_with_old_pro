@@ -28,10 +28,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x_it.h"
-#include "hal_uart.h"
+//#include "hal_uart.h"
 #include "hal_timer.h"
 #include "hal_key.h"
-#include "hal_parset.h"
+//#include "hal_parset.h"
 #include "hal_ir_sensor.h"
 #include "hal_rtc.h"
 
@@ -400,12 +400,8 @@ INTERRUPT_HANDLER(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler, 27)
   */
 INTERRUPT_HANDLER(USART1_RX_TIM5_CC_IRQHandler, 28)
 {
-  uint8_t temp;
-
   /* Read one byte from the receive data register and send it back */
-  temp = USART_ReceiveData8(UART_CONFIG);
-  HalUartConfigRX_Callback(temp);
-  //USART_SendData8(UART_CONFIG, temp);
+  USART_ReceiveData8(USART1);
 }
 
 /**

@@ -7,7 +7,6 @@
 #include "hal_rf.h"
 #include "hal_ir_sensor.h"
 #include "virtual_spi.h"
-#include "hal_uart.h"
 #include "hal_timer.h"
 #include "hal_flash.h"
 #include "hal_key.h"
@@ -106,6 +105,22 @@ typedef struct {
 } AppVersion_t;
 
 HAL_MCU_DATA_ALIGN(1)
+/* 设备网络参数定义 */
+typedef struct {
+	uint16_t LinkAddr;     // 设备地址
+	uint16_t LinkNetId;    // 设备网络地址
+	uint32_t LinkArealId;  // 设备区域号
+	bool enableRoute;      // 是否具备路由功能
+} LinkParDef;
+
+/* 灯控制参数定义 */
+typedef struct {
+	uint8_t groupId;    // 组ID
+	uint8_t Leval;      // 亮度
+	uint32_t ON_seconds; // 开启时长/s
+	uint32_t send_peroid; // 发送开关信号的最小周期
+} LightParDef;
+
 // 用于回复扫描命令消息的结构体定义
 typedef struct {
 	uint8_t deviceType;              // 设备类型
@@ -119,6 +134,7 @@ typedef struct {
 }ScanResponse_t;
 
 HAL_MCU_DATA_ALIGN(1)
+
 // 设备参数结构体定义
 typedef struct {
 	uint32_t init_flag;

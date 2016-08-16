@@ -4,6 +4,9 @@
   <project>
     <path>$WS_DIR$\IRSensorTest.ewp</path>
   </project>
+  <project>
+    <path>$WS_DIR$\..\RF_bootloader\IAR Project Files\RF_bootloader.ewp</path>
+  </project>
   <batchBuild/>
 </workspace>
 

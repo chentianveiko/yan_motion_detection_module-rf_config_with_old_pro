@@ -173,9 +173,6 @@ void MainLooper(void) {
 		GetRtcValue();  // 获取当前RTC时间及日期参数
 
 		if (ifIrWakeuped == true) {
-			if (ifEnabledUart == true) {
-				debug_log("infrared sensor wake up!\r\n");
-			}
 
 			// 当两次唤醒时间间隔超过设定值
 			if (HalTimeCompare(RTC_TimeStr, RTC_DateStr) > device_config.ctr_config.send_peroid) {
@@ -186,23 +183,14 @@ void MainLooper(void) {
 
 		// 判断是否是闹钟唤醒的
 		if (true == ifRtcAlarmWakeup) {
-
-			if (ifEnabledUart == true) {
-				debug_log("rtc wake up!\r\n");
-			}
 			ifRtcAlarmWakeup = false;
 
 			if ((HalIR_GetOutPutStu() == true) || (ifIrWakeuped == true)) {
 				ifIrWakeuped = false;
 				// 准备发送一个灯控制信号
 				ifNeedSend = true;
-				if (ifEnabledUart == true) {
-					debug_log("infrared pin is high!\r\n");
-				}
 			} else {
-				if (ifEnabledUart == true) {
-					debug_log("infrared pin is low!\r\n");
-				}
+              ;
 			}
 
 			HalResetRtcAlarm();
@@ -212,23 +200,10 @@ void MainLooper(void) {
 		if (ifNeedSend == true) {
 			ifNeedSend = false;
 			// 保存本次发送的唤醒时间,以用作下次唤醒后判断
-			/*RTC_DateStr_bck.RTC_Date = RTC_DateStr.RTC_Date;
-			 RTC_DateStr_bck.RTC_Month = RTC_DateStr.RTC_Month;
-			 RTC_DateStr_bck.RTC_Year = RTC_DateStr.RTC_Year;
-
-			 RTC_TimeStr_bck.RTC_Hours = RTC_TimeStr.RTC_Hours;
-			 RTC_TimeStr_bck.RTC_Minutes = RTC_TimeStr.RTC_Minutes;
-			 RTC_TimeStr_bck.RTC_Seconds = RTC_TimeStr.RTC_Seconds;*/
-
 			memcpy(&RTC_DateStr_bck, &RTC_DateStr, sizeof(RTC_DateTypeDef));
 			memcpy(&RTC_TimeStr_bck, &RTC_TimeStr, sizeof(RTC_TimeTypeDef));
 
 			IrLightControl(device_config.ctr_config.groupId, device_config.ctr_config.Leval, (device_config.ctr_config.ON_seconds) * 1000); // 发送分组灯控制信号，其中10000是灯开的延时，超过这个时间后，回复到灯的前一个状态
-
-			if (ifEnabledUart == true) {
-				debug_log("send a lamp ctr message,gid-%d,arealid-%d!\r\n", (int) device_config.ctr_config.groupId,
-						(int) device_config.net_config.LinkArealId);
-			}
 
 			// 等待无线信号发送完成
 			for (uint8_t i = 0; i < 3; i++) {
@@ -270,9 +245,6 @@ int main(void) {
 	SystemClockInit (CLK_TYPE_HSE);
 	HalFlashInit();
 	_hw_board_random_init();
-	if (ifEnabledUart == true) {
-		HalUartConfigInit();
-	}
 	disableInterrupts();
 	spi_init();
 	imd_config_load();
@@ -318,7 +290,6 @@ int main(void) {
  */
 void ConfigLoop(void) {
 	static uint32_t time_last = 0;
-	uint32_t rand_value;
 
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);
 	HalRestartRunTimer(LED_FlashTimerID, LED_Flash_Interval, RT_TP_MSECOND);
@@ -328,13 +299,8 @@ void ConfigLoop(void) {
 			HAL_LED_RED_Toggle();
 		}
 
-		rand_value = hw_board_random_get();
 		if (time_last != HalgetRunTimerCnt(GenRunTimerID)) {
 			time_last = HalgetRunTimerCnt(GenRunTimerID);
-			if (ifEnabledUart == true) {
-				debug_log("[beautiful note]--config loop time remain:%d seconds!\r\n", (int) time_last);
-				//debug_log("[beautiful note]--rand value is:%d!\r\n", (int) rand_value);
-			}
 		}
 		if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
 			break;
@@ -347,9 +313,6 @@ void ConfigLoop(void) {
 	}
 
 	HAL_LED_RED_OFF();
-	if (ifEnabledUart == true) {
-		debug_log("[beautiful note]--enter main application loop!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -403,14 +366,11 @@ static void rf_data_receive_handler(struct LinkMessage *message) {
 		// 退出配置循环
 	case MESSAGE_TP_TERMINAL_CONFIG_REQ:
 		ifEndConfigFlag = true;
-		if (ifEnabledUart == true) {
-			debug_log("[beautiful note]--received exit config loop command!\r\n");
-		}
 		break;
 
 		// 空中升级
 	case LINK_ENTER_BOOTLOADER:
-
+        imd_rf_enterBootloader(message);
 		break;
 
 	default:
@@ -436,10 +396,6 @@ void imd_rf_respond_scan_message(void) {
 	uint8_t buffer[sizeof(ScanResponse_t)];
 
 	Hal_RfTxComplete = 0;
-
-	if (ifEnabledUart == true) {
-		debug_log("received scan message!\r\n");
-	}
 
 	rand_value = hw_board_random_get();
 	rand_value = (rand_value % 100) + (rand_value * 100 % 2000);
@@ -497,9 +453,6 @@ void imd_rf_setnetPar_deal(struct LinkMessage *message) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-			if (ifEnabledUart == true) {
-				debug_log("received net par setting message!\r\n");
-			}
 
 			device_config.net_config.LinkAddr = message->data[12];
 			device_config.net_config.LinkAddr <<= 8;
@@ -532,10 +485,6 @@ void imd_rf_setnetPar_deal(struct LinkMessage *message) {
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-
-	if (ifEnabledUart == true) {
-		debug_log("set net par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -561,10 +510,6 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 
-			if (ifEnabledUart == true) {
-				debug_log("received net par get message!\r\n");
-			}
-
 			arrayS[0] = 0;   // 错误码
 			arrayS[1] = (uint8_t)(device_config.net_config.LinkAddr >> 8);
 			arrayS[2] = (uint8_t)(device_config.net_config.LinkAddr);
@@ -585,9 +530,6 @@ void imd_rf_getnetPar_deal(struct LinkMessage *message) {
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-	if (ifEnabledUart == true) {
-		debug_log("get net par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -612,10 +554,6 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 		HW_MCU_READ_DEVICE_ID(UID_array);
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-
-			if (ifEnabledUart == true) {
-				debug_log("received ctr par setting message!\r\n");
-			}
 
 			device_config.ctr_config.groupId = message->data[12];  // 前12个字节是用于判断消息目标是否是本设备的唯一序列号
 
@@ -646,9 +584,6 @@ void imd_rf_setlightPar_deal(struct LinkMessage *message) {
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-	if (ifEnabledUart == true) {
-		debug_log("set ctr par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -673,10 +608,6 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {
 			HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
 
-			if (ifEnabledUart == true) {
-				debug_log("received net par get message!\r\n");
-			}
-
 			arrayS[0] = 0;   // 错误码
 			arrayS[1] = (uint8_t)(device_config.ctr_config.groupId);
 			arrayS[2] = (uint8_t)(device_config.ctr_config.Leval);
@@ -699,9 +630,6 @@ void imd_rf_getlightPar_deal(struct LinkMessage *message) {
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-	if (ifEnabledUart == true) {
-		debug_log("get ctr par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -726,9 +654,6 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 
 	if (message->length >= 13) {
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
-			if (ifEnabledUart == true) {
-				debug_log("received rf channel setting message!\r\n");
-			}
 			if (message->data[12] < HAL_RF_CHANNEL_NB) {            // 判断信道值是否合法
 				device_config.rf_channel = (HalRFChannel_t) message->data[12];       // 读取并设置信道
 				imd_config_restore();
@@ -746,9 +671,6 @@ void imd_rf_setrfChannel(struct LinkMessage *message) {
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-	if (ifEnabledUart == true) {
-		debug_log("set rf channel par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -773,9 +695,6 @@ void imd_rf_enterBootloader(struct LinkMessage *message) {
 
 	if (message->length >= 13) {
 		if (strncmp((char const *) UID_array, (char const *) message->data, 12) == 0) {           // 判断是否与stm8唯一序列号匹配
-			if (ifEnabledUart == true) {
-				debug_log("received enter bootloader message!\r\n");
-			}
 			if (message->data[12] < HAL_RF_CHANNEL_NB) {            // 判断信道值是否合法
 				device_config.boot_rf_channel = (HalRFChannel_t) message->data[12];       // 读取并设置信道
 				imd_config_restore();
@@ -785,14 +704,11 @@ void imd_rf_enterBootloader(struct LinkMessage *message) {
 					;
 				}
 				Hal_RfTxComplete = 0;
-				asm("jp $8000");
+				HAL_MCU_REBOOT();
 			}
 		}
 	}
 	HalRestartRunTimer(GenRunTimerID, CONFIG_TIME_RESTART, RT_TP_SECOND);  // 重设等待配置超时定时器
-	if (ifEnabledUart == true) {
-		debug_log("set rf channel par end!\r\n");
-	}
 }
 /*
  *******************************************************************************
@@ -808,7 +724,7 @@ void imd_rf_enterBootloader(struct LinkMessage *message) {
  *******************************************************************************
  */
 void imd_config_load(void) {
-	HalFlashRead(HAL_MCU_FLASH_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+	HalFlashRead(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 
 	if (device_config.init_flag != FLASH_INIT_FLAG_VALUE) {
 		device_config.init_flag = FLASH_INIT_FLAG_VALUE;
@@ -826,16 +742,9 @@ void imd_config_load(void) {
 		device_config.ctr_config.send_peroid = IMD_LIGHT_SEND_PERIOD_DEFAULT;
 		device_config.boot_rf_channel = IMD_BOOT_RF_CHANNEL_DEFAULT;
 
-		HalFlashWrite(HAL_MCU_FLASH_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+		HalFlashWrite(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 	} else {
-		if (ifEnabledUart == true) {
-			debug_log("[net par]--LinkAddr is: %d\r\n           Net id is: %d\r\n           Areal id is: %d\r\n",
-					(int) device_config.net_config.LinkAddr, (int) device_config.net_config.LinkNetId, (int) device_config.net_config.LinkArealId);
-			debug_log("[crt par]--group id is: %d\r\n           on seconds is: %d\r\n           level is: %d\r\n           send period is: %d\r\n",
-					(int) device_config.ctr_config.groupId, (int) device_config.ctr_config.ON_seconds, (int) device_config.ctr_config.Leval,
-					(int) device_config.ctr_config.send_peroid);
-			debug_log("[rf  par]--rf channel is:%d\r\n", (uint8_t) device_config.rf_channel);
-		}
+      ;
 	}
 }
 /*
@@ -852,7 +761,7 @@ void imd_config_load(void) {
  *******************************************************************************
  */
 void imd_config_restore(void) {
-	HalFlashWrite(HAL_MCU_FLASH_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+	HalFlashWrite(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 }
 
 #ifdef  USE_FULL_ASSERT

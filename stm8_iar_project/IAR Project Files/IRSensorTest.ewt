@@ -1979,12 +1979,6 @@
       <name>$PROJ_DIR$\..\Source\HAL\hal_mcu.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_parset.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_parset.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_rf.c</name>
     </file>
     <file>
@@ -2001,12 +1995,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_timer.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_uart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\virtual_spi.c</name>

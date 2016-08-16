@@ -1,7 +1,7 @@
 #include "hal_parset.h"
 #include "hal_timer.h"
 #include "hal_flash.h"
-#include "hal_uart.h"
+//#include "hal_uart.h"
 #include "../Startup/main.h"
 
 /*

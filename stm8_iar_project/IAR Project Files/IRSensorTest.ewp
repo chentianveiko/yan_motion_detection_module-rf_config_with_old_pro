@@ -17,7 +17,7 @@
         <debug>1</debug>
         <option>
           <name>GenDeviceSelectMenu</name>
-          <state>STM8L151C8	STM8L151C8</state>
+          <state>STM8L151G6	STM8L151G6</state>
         </option>
         <option>
           <name>GenCodeModel</name>
@@ -35,7 +35,7 @@
         </option>
         <option>
           <name>ExePath</name>
-          <state>..\Output\Light\Exe</state>
+          <state>..\Output\..\RF_bootloader\IAR Project Files</state>
         </option>
         <option>
           <name>ObjPath</name>
@@ -270,6 +270,7 @@
           <state>$PROJ_DIR$\..\Source\etos</state>
           <state>$PROJ_DIR$\..\Source\Application</state>
           <state>$PROJ_DIR$\..\Source\HAL</state>
+          <state>$PROJ_DIR$\..\Source\Link</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -492,7 +493,7 @@
         <option>
           <name>OOCOutputFormat</name>
           <version>2</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>OCOutputOverride</name>
@@ -500,7 +501,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>stm8l_light.hex</state>
+          <state>app.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -614,11 +615,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\config\lnkstm8l151c8.icf</state>
+          <state>$PROJ_DIR$\..\RF_bootloader\lnkstm8l152c6_image.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1626,15 +1627,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_ir_sensor.c</name>
-      <excluded>
-        <configuration>Light</configuration>
-      </excluded>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_ir_sensor.h</name>
-      <excluded>
-        <configuration>Light</configuration>
-      </excluded>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_key.c</name>
@@ -1655,12 +1650,6 @@
       <name>$PROJ_DIR$\..\Source\HAL\hal_mcu.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_parset.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_parset.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_rf.c</name>
     </file>
     <file>
@@ -1677,12 +1666,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\hal_timer.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_uart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\Source\HAL\hal_uart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\Source\HAL\virtual_spi.c</name>

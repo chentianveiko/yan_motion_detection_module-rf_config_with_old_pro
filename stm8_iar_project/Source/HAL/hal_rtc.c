@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "hal_parset.h"
-#include "hal_uart.h"
+//#include "hal_parset.h"
+//#include "hal_uart.h"
 #include "../Startup/main.h"
 
 RTC_InitTypeDef RTC_InitStr;
@@ -95,9 +95,6 @@ uint16_t HalTimeCompare(RTC_TimeTypeDef timStr, RTC_DateTypeDef dataStr) {
 	calcTmp_now = HalTimeGetSeconds(timStr, dataStr);
 	calcTmp_old = HalTimeGetSeconds(RTC_TimeStr_bck, RTC_DateStr_bck);
 	calcTmp_old = max(calcTmp_now, calcTmp_old) - min(calcTmp_now, calcTmp_old);
-	if (ifEnabledUart == true) {
-		debug_log("the interval is:%d\r\n", (int) calcTmp_old);
-	}
 
 	return calcTmp_old;  // 返回实际相差的秒数
 
