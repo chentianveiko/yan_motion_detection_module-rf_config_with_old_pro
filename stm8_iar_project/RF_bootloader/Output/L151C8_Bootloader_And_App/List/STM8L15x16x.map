@@ -1,0 +1,639 @@
+###############################################################################
+#
+# IAR ELF Linker V2.10.4.157 for STM8                     16/Aug/2016  15:38:27
+# Copyright 2010-2015 IAR Systems AB.
+#
+#    Output file  =  
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\Output\STM8L15x16x.out
+#    Map file     =  
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\List\STM8L15x16x.map
+#    Command line =  
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\bootloader.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\hal_flash.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\hal_light.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\hal_rf.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\link.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\main.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\port.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_clk.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_exti.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_flash.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_gpio.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_iwdg.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_syscfg.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_tim1.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_tim2.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\stm8l15x_tim4.o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj\virtual_spi.o
+#        --redirect _Printf=_PrintfSmall --redirect _Scanf=_ScanfSmall -o
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\Output\STM8L15x16x.out
+#        --strip --keep APP_CODE
+#        "--image_input=E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\IAR
+#        Project Files\app.bin,APP_CODE,.app_code,1" --map
+#        E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\List\STM8L15x16x.map
+#        --config
+#        "E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\IAR
+#        Project Files\lnkstm8l151g6_bootloader.icf" --config_def
+#        _CSTACK_SIZE=0x100 --config_def _HEAP_SIZE=0x400 --entry
+#        __iar_program_start --debug_lib
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+__Heap_Handler             = Basic
+__SystemLibrary            = DLib
+__code_model               = small
+__core                     = stm8
+__data_model               = medium
+__dlib_file_descriptor     = 0
+__dlib_full_locale_support = 0
+__rt_version               = 4
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A1":  place at start of [0x000000-0x0000ff] { rw section .vregs };
+"A2":  place at end of [0x000000-0x0007ff] { block CSTACK };
+"P2":  place in [from 0x000000 to 0x0007ff] {
+          block HEAP, rw section __DLIB_PERTHREAD, rw section .far.bss,
+          rw section .far.data, rw section .far.noinit,
+          rw section .far_func.textrw, rw section .huge.bss,
+          rw section .huge.data, rw section .huge.noinit,
+          rw section .huge_func.textrw, rw section .iar.dynexit,
+          rw section .near.bss, rw section .near.data, rw section .near.noinit,
+          rw section .near_func.textrw };
+"P3":  place in [from 0x008000 to 0x00ffff] { block INTVEC };
+"P4":  place in [from 0x008000 to 0x00ffff] {
+          ro section __DLIB_PERTHREAD_init, ro section .far.data_init,
+          ro section .far_func.textrw_init, ro section .huge.data_init,
+          ro section .huge_func.textrw_init, ro section .iar.init_table,
+          ro section .init_array, ro section .near.data_init,
+          ro section .near.rodata, ro section .near_func.text,
+          ro section .near_func.textrw_init, ro section .tiny.data_init,
+          ro section .tiny.rodata_init };
+"A4":  place at start of [0x00a800-0x00ffff] { ro section .app_code };
+
+  Section            Kind      Address    Size  Object
+  -------            ----      -------    ----  ------
+"A1":                                     0x10
+  .vregs             uninit   0x000000    0x10  vregs.o [5]
+                            - 0x000010    0x10
+
+"P2":                                    0x4a2
+  P2 s0                       0x000010    0x54  <Init block>
+    .near.data       inited   0x000010    0x46  hal_rf.o [2]
+    .near.data       inited   0x000056     0x6  hal_rf.o [2]
+    .near.data       inited   0x00005c     0x6  virtual_spi.o [2]
+    .near.data       inited   0x000062     0x2  hal_rf.o [2]
+  .near.bss          zero     0x000064    0x19  port.o [2]
+  .near.bss          zero     0x00007d    0x16  bootloader.o [2]
+  .near.bss          zero     0x000093    0x11  link.o [2]
+  .near.bss          zero     0x0000a4     0x4  xxmemxmalloc.o [5]
+  .near.bss          zero     0x0000a8     0x2  hal_rf.o [2]
+  .near.bss          zero     0x0000aa     0x2  port.o [2]
+  .near.bss          zero     0x0000ac     0x2  port.o [2]
+  .near.bss          zero     0x0000ae     0x2  port.o [2]
+  .near.bss          zero     0x0000b0     0x2  xgetmemchunk.o [5]
+  HEAP                        0x0000b2   0x400  <Block>
+    HEAP             uninit   0x0000b2   0x400  <Block tail>
+                            - 0x0004b2   0x4a2
+
+"A2":                                    0x100
+  CSTACK                      0x000700   0x100  <Block>
+    CSTACK           uninit   0x000700   0x100  <Block tail>
+                            - 0x000800   0x100
+
+"P3":                                    0x100
+  INTVEC                      0x008000   0x100  <Block>
+    .intvec          const    0x008000    0x80  port.o [2]
+    .intvec          const    0x008080    0x80  interrupt.o [5]
+                            - 0x008100   0x100
+
+"P4":                                   0x1c7f
+  .near_func.text    ro code  0x008100   0x1c3  long.o [5]
+  .near_func.text    ro code  0x0082c3   0x135  vreg_util.o [5]
+  .near_func.text    ro code  0x0083f8   0x106  hal_rf.o [2]
+  .near_func.text    ro code  0x0084fe   0x105  stm8l15x_exti.o [2]
+  .near_func.text    ro code  0x008603    0xe5  bootloader.o [2]
+  .near_func.text    ro code  0x0086e8    0xd1  xxmemxfree.o [5]
+  .near_func.text    ro code  0x0087b9    0xc7  link.o [2]
+  .near_func.text    ro code  0x008880    0xc3  link.o [2]
+  .near_func.text    ro code  0x008943    0xaf  hal_rf.o [2]
+  .near_func.text    ro code  0x0089f2    0xae  stm8l15x_gpio.o [2]
+  .near_func.text    ro code  0x008aa0    0x9c  hal_rf.o [2]
+  .near_func.text    ro code  0x008b3c    0x9c  hal_rf.o [2]
+  .near_func.text    ro code  0x008bd8    0x94  port.o [2]
+  .near_func.text    ro code  0x008c6c    0x93  port.o [2]
+  .near_func.text    ro code  0x008cff    0x93  xxmemxmalloc.o [5]
+  .near_func.text    ro code  0x008d92    0x91  virtual_spi.o [2]
+  .near_func.text    ro code  0x008e23    0x89  stm8l15x_clk.o [2]
+  .near_func.text    ro code  0x008eac    0x76  bootloader.o [2]
+  .near_func.text    ro code  0x008f22    0x74  bootloader.o [2]
+  .near_func.text    ro code  0x008f96    0x74  hal_rf.o [2]
+  .near_func.text    ro code  0x00900a    0x74  virtual_spi.o [2]
+  .near_func.text    ro code  0x00907e    0x71  bootloader.o [2]
+  .near_func.text    ro code  0x0090ef    0x6d  hal_rf.o [2]
+  .near_func.text    ro code  0x00915c    0x6c  port.o [2]
+  .near_func.text    ro code  0x0091c8    0x65  hal_rf.o [2]
+  .near_func.text    ro code  0x00922d    0x65  short.o [5]
+  .near_func.text    ro code  0x009292    0x64  hal_flash.o [2]
+  .near_func.text    ro code  0x0092f6    0x63  hal_rf.o [2]
+  .near_func.text    ro code  0x009359    0x62  hal_rf.o [2]
+  .near_func.text    ro code  0x0093bb    0x5f  hal_rf.o [2]
+  .near_func.text    ro code  0x00941a    0x5f  xxmemxmalloc.o [5]
+  .near_func.text    ro code  0x009479    0x5a  hal_flash.o [2]
+  .near_func.text    ro code  0x0094d3    0x53  link.o [2]
+  .near_func.text    ro code  0x009526    0x48  hal_rf.o [2]
+  .near_func.text    ro code  0x00956e    0x46  hal_rf.o [2]
+  .near_func.text    ro code  0x0095b4    0x43  bootloader.o [2]
+  .near_func.text    ro code  0x0095f7    0x42  bootloader.o [2]
+  .near_func.text    ro code  0x009639    0x40  link.o [2]
+  .near_func.text    ro code  0x009679    0x37  hal_rf.o [2]
+  .near_func.text    ro code  0x0096b0    0x37  port.o [2]
+  .near_func.text    ro code  0x0096e7    0x34  long_util.o [5]
+  .near_func.text    ro code  0x00971b    0x33  hal_rf.o [2]
+  .near_func.text    ro code  0x00974e    0x32  hal_rf.o [2]
+  .near_func.text    ro code  0x009780    0x31  hal_rf.o [2]
+  .near_func.text    ro code  0x0097b1    0x30  link.o [2]
+  .near_func.text    ro code  0x0097e1    0x2f  hal_rf.o [2]
+  .near_func.text    ro code  0x009810    0x2d  hal_rf.o [2]
+  .near_func.text    ro code  0x00983d    0x2d  dc_util.o [5]
+  .near_func.text    ro code  0x00986a    0x2a  stm8l15x_tim2.o [2]
+  .near_func.text    ro code  0x009894    0x28  init_small.o [5]
+  .near_func.text    ro code  0x0098bc    0x27  port.o [2]
+  .near_func.text    ro code  0x0098e3    0x27  stm8l15x_tim2.o [2]
+  .near_func.text    ro code  0x00990a    0x26  hal_rf.o [2]
+  .near_func.text    ro code  0x009930    0x25  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009955    0x25  memcpy.o [5]
+  .near_func.text    ro code  0x00997a    0x24  port.o [2]
+  .near_func.text    ro code  0x00999e    0x24  virtual_spi.o [2]
+  .near_func.text    ro code  0x0099c2    0x23  port.o [2]
+  .near_func.text    ro code  0x0099e5    0x21  stm8l15x_exti.o [2]
+  .iar.init_table    const    0x009a06    0x12  - Linker created -
+  .near.rodata       const    0x009a18    0x20  hal_rf.o [2]
+  .near.rodata       const    0x009a38    0x20  hal_rf.o [2]
+  .near_func.text    ro code  0x009a58    0x20  port.o [2]
+  .near_func.text    ro code  0x009a78    0x20  virtual_spi.o [2]
+  .near_func.text    ro code  0x009a98    0x1f  hal_rf.o [2]
+  .near_func.text    ro code  0x009ab7    0x1f  link.o [2]
+  .near_func.text    ro code  0x009ad6    0x1e  init_small.o [5]
+  .near_func.text    ro code  0x009af4    0x19  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009b0d    0x19  xgetmemchunk.o [5]
+  .near_func.text    ro code  0x009b26    0x17  init.o [5]
+  .near_func.text    ro code  0x009b3d    0x16  port.o [2]
+  .near_func.text    ro code  0x009b53    0x15  link.o [2]
+  .near_func.text    ro code  0x009b68    0x15  memset.o [5]
+  .near_func.text    ro code  0x009b7d    0x14  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009b91    0x14  virtual_spi.o [2]
+  .near_func.text    ro code  0x009ba5    0x14  __dbg_xxexit.o [4]
+  .near_func.text    ro code  0x009bb9    0x13  hal_flash.o [2]
+  .near_func.text    ro code  0x009bcc    0x13  stm8l15x_tim4.o [2]
+  .near_func.text    ro code  0x009bdf    0x13  cstartup.o [5]
+  .near_func.text    ro code  0x009bf2    0x11  stm8l15x_tim4.o [2]
+  .near_func.text    ro code  0x009c03     0xd  stm8l15x_clk.o [2]
+  .near_func.text    ro code  0x009c10     0xd  stm8l15x_tim2.o [2]
+  .near_func.text    ro code  0x009c1d     0xd  stm8l15x_tim2.o [2]
+  .near_func.text    ro code  0x009c2a     0xd  stm8l15x_tim2.o [2]
+  .near_func.text    ro code  0x009c37     0xd  stm8l15x_tim4.o [2]
+  .near_func.text    ro code  0x009c44     0xd  move.o [5]
+  .near.rodata       const    0x009c51     0xc  hal_rf.o [2]
+  .near_func.text    ro code  0x009c5d     0xb  port.o [2]
+  .near_func.text    ro code  0x009c68     0xb  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009c73     0xb  stm8l15x_gpio.o [2]
+  .near.rodata       const    0x009c7e     0xa  hal_rf.o [2]
+  .near_func.text    ro code  0x009c88     0xa  hal_rf.o [2]
+  .near_func.text    ro code  0x009c92     0xa  virtual_spi.o [2]
+  .near_func.text    ro code  0x009c9c     0x8  main.o [2]
+  .near_func.text    ro code  0x009ca4     0x8  port.o [2]
+  .near_func.text    ro code  0x009cac     0x8  xxmemxmalloc.o [5]
+  .near_func.text    ro code  0x009cb4     0x7  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009cbb     0x7  virtual_spi.o [2]
+  .near_func.text    ro code  0x009cc2     0x7  xxmemxmalloc.o [5]
+  .near_func.text    ro code  0x009cc9     0x6  link.o [2]
+  .near_func.text    ro code  0x009ccf     0x6  virtual_spi.o [2]
+  .near_func.text    ro code  0x009cd5     0x5  stm8l15x_iwdg.o [2]
+  .near_func.text    ro code  0x009cda     0x5  stm8l15x_tim4.o [2]
+  .near_func.text    ro code  0x009cdf     0x5  stm8l15x_tim4.o [2]
+  .near_func.text    ro code  0x009ce4     0x5  char.o [5]
+  .near_func.text    ro code  0x009ce9     0x5  cexit.o [5]
+  .near.rodata       const    0x009cee     0x4  hal_rf.o [2]
+  .near_func.text    ro code  0x009cf2     0x4  link.o [2]
+  .near_func.text    ro code  0x009cf6     0x4  link.o [2]
+  .near_func.text    ro code  0x009cfa     0x4  link.o [2]
+  .near_func.text    ro code  0x009cfe     0x4  stm8l15x_clk.o [2]
+  .near_func.text    ro code  0x009d02     0x4  stm8l15x_clk.o [2]
+  .near_func.text    ro code  0x009d06     0x4  stm8l15x_clk.o [2]
+  .near_func.text    ro code  0x009d0a     0x4  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009d0e     0x4  stm8l15x_flash.o [2]
+  .near_func.text    ro code  0x009d12     0x3  port.o [2]
+  .near_func.text    ro code  0x009d15     0x3  port.o [2]
+  .near_func.text    ro code  0x009d18     0x3  stm8l15x_gpio.o [2]
+  .near_func.text    ro code  0x009d1b     0x3  interrupt.o [5]
+  .near_func.text    ro code  0x009d1e     0x3  low_level_init.o [5]
+  .near_func.text    ro code  0x009d21     0x3  exit.o [5]
+  .near_func.text    ro code  0x009d24     0x3  unhandled_exception.o [5]
+  .near_func.text    ro code  0x009d27     0x2  port.o [2]
+  .near_func.text    ro code  0x009d29     0x1  hal_rf.o [2]
+  .near_func.text    ro code  0x009d2a     0x1  __dbg_break.o [4]
+  Initializer bytes  const    0x009d2b    0x54  <for P2 s0>
+                            - 0x009d7f  0x1c7f
+
+"A4":                                   0x48ed
+  .app_code          const    0x00a800  0x48ed  app.bin [1]
+                            - 0x00f0ed  0x48ed
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address   Size
+          -------   ----
+Zero (__iar_zero_init2)
+    1 destination range, total size 0x4e:
+          0x000064  0x4e
+
+Copy (__iar_copy_init2)
+    1 source range, total size 0x54:
+          0x009d2b  0x54
+    1 destination range, total size 0x54:
+          0x000010  0x54
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                 ro code  ro data  rw data
+    ------                 -------  -------  -------
+E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\IAR Project Files: [1]
+    app.bin                          18 669
+    ------------------------------------------------
+    Total:                           18 669
+
+E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj: [2]
+    bootloader.o               709                22
+    hal_flash.o                209
+    hal_rf.o                 1 886      168       80
+    link.o                     659                17
+    main.o                       8
+    port.o                     649      128       31
+    stm8l15x_clk.o             162
+    stm8l15x_exti.o            294
+    stm8l15x_flash.o           108
+    stm8l15x_gpio.o            188
+    stm8l15x_iwdg.o              5
+    stm8l15x_tim2.o            120
+    stm8l15x_tim4.o             59
+    virtual_spi.o              372        6        6
+    ------------------------------------------------
+    Total:                   5 428      302      156
+
+command line: [3]
+    ------------------------------------------------
+    Total:
+
+dbgstm8smd.a: [4]
+    __dbg_break.o                1
+    __dbg_xxexit.o              20
+    ------------------------------------------------
+    Total:                      21
+
+dlstm8smn.a: [5]
+    cexit.o                      5
+    char.o                       5
+    cstartup.o                  19
+    dc_util.o                   45
+    exit.o                       3
+    init.o                      23
+    init_small.o                70
+    interrupt.o                  3      128
+    long.o                     451
+    long_util.o                 52
+    low_level_init.o             3
+    memcpy.o                    37
+    memset.o                    21
+    move.o                      13
+    short.o                    101
+    unhandled_exception.o        3
+    vreg_util.o                309
+    vregs.o                                       16
+    xgetmemchunk.o              25                 2
+    xxmemxfree.o               209
+    xxmemxmalloc.o             257                 4
+    ------------------------------------------------
+    Total:                   1 654      128       22
+
+    Linker created                       18    1 280
+----------------------------------------------------
+    Grand Total:             7 103   19 117    1 458
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                    Address    Size  Type      Object
+-----                    -------    ----  ----      ------
+.iar.init_table$$Base   0x009a06           --   Gb  - Linker created -
+.iar.init_table$$Limit  0x009a18           --   Gb  - Linker created -
+?add32_l0_l0_0x         0x00813b          Code  Gb  long.o [5]
+?add32_l0_l0_dl         0x008136          Code  Gb  long.o [5]
+?and16_x_x_dw           0x00925b          Code  Gb  short.o [5]
+?and16_x_x_w0           0x00925e          Code  Gb  short.o [5]
+?and32_l0_l0_0x         0x008281          Code  Gb  long.o [5]
+?and32_l0_l0_l1         0x00827e          Code  Gb  long.o [5]
+?b0                     0x000000          Data  Gb  vregs.o [5]
+?b1                     0x000001          Data  Gb  vregs.o [5]
+?b10                    0x00000a          Data  Gb  vregs.o [5]
+?b11                    0x00000b          Data  Gb  vregs.o [5]
+?b12                    0x00000c          Data  Gb  vregs.o [5]
+?b13                    0x00000d          Data  Gb  vregs.o [5]
+?b14                    0x00000e          Data  Gb  vregs.o [5]
+?b15                    0x00000f          Data  Gb  vregs.o [5]
+?b2                     0x000002          Data  Gb  vregs.o [5]
+?b3                     0x000003          Data  Gb  vregs.o [5]
+?b4                     0x000004          Data  Gb  vregs.o [5]
+?b5                     0x000005          Data  Gb  vregs.o [5]
+?b6                     0x000006          Data  Gb  vregs.o [5]
+?b7                     0x000007          Data  Gb  vregs.o [5]
+?b8                     0x000008          Data  Gb  vregs.o [5]
+?b9                     0x000009          Data  Gb  vregs.o [5]
+?dc16_w0                0x009844          Code  Gb  dc_util.o [5]
+?dc32_l1                0x009852          Code  Gb  dc_util.o [5]
+?dc32_px                0x00985f          Code  Gb  dc_util.o [5]
+?dc8_px                 0x00983d          Code  Gb  dc_util.o [5]
+?dec32_0x_0x            0x008122          Code  Gb  long.o [5]
+?dec32_l2_l2            0x00811d          Code  Gb  long.o [5]
+?e0                     0x000001          Data  Gb  vregs.o [5]
+?e1                     0x000005          Data  Gb  vregs.o [5]
+?e2                     0x000009          Data  Gb  vregs.o [5]
+?e3                     0x00000d          Data  Gb  vregs.o [5]
+?epilogue_l2            0x00835e          Code  Gb  vreg_util.o [5]
+?epilogue_l2_l3         0x00835b          Code  Gb  vreg_util.o [5]
+?epilogue_l2_w6         0x008362          Code  Gb  vreg_util.o [5]
+?epilogue_w4            0x008369          Code  Gb  vreg_util.o [5]
+?inc32_0x_0x            0x00810f          Code  Gb  long.o [5]
+?inc32_l0_l0            0x008100          Code  Gb  long.o [5]
+?inc32_l2_l2            0x008105          Code  Gb  long.o [5]
+?inc32_l3_l3            0x00810a          Code  Gb  long.o [5]
+?l0                     0x000000          Data  Gb  vregs.o [5]
+?l1                     0x000004          Data  Gb  vregs.o [5]
+?l2                     0x000008          Data  Gb  vregs.o [5]
+?l3                     0x00000c          Data  Gb  vregs.o [5]
+?load32_0x_l0           0x0096ff          Code  Gb  long_util.o [5]
+?load32_0x_l1           0x00970d          Code  Gb  long_util.o [5]
+?load32_l0_0x           0x0096e7          Code  Gb  long_util.o [5]
+?load32_l1_0x           0x0096f3          Code  Gb  long_util.o [5]
+?mov_e0_e2              0x008393          Code  Gb  vreg_util.o [5]
+?mov_e0_e3              0x0083a0          Code  Gb  vreg_util.o [5]
+?mov_e1_e2              0x0083ad          Code  Gb  vreg_util.o [5]
+?mov_e1_e3              0x0083ba          Code  Gb  vreg_util.o [5]
+?mov_e2_e0              0x0083c7          Code  Gb  vreg_util.o [5]
+?mov_e2_e1              0x0083d4          Code  Gb  vreg_util.o [5]
+?mov_e3_e0              0x0083e1          Code  Gb  vreg_util.o [5]
+?mov_e3_e1              0x0083ee          Code  Gb  vreg_util.o [5]
+?mov_l0_l2              0x008390          Code  Gb  vreg_util.o [5]
+?mov_l0_l3              0x00839d          Code  Gb  vreg_util.o [5]
+?mov_l1_l2              0x0083aa          Code  Gb  vreg_util.o [5]
+?mov_l1_l3              0x0083b7          Code  Gb  vreg_util.o [5]
+?mov_l2_l0              0x0083c4          Code  Gb  vreg_util.o [5]
+?mov_l2_l1              0x0083d1          Code  Gb  vreg_util.o [5]
+?mov_l3_l0              0x0083de          Code  Gb  vreg_util.o [5]
+?mov_l3_l1              0x0083eb          Code  Gb  vreg_util.o [5]
+?mov_w0_w2              0x00836d          Code  Gb  vreg_util.o [5]
+?mov_w0_w5              0x008374          Code  Gb  vreg_util.o [5]
+?mov_w1_w5              0x008396          Code  Gb  vreg_util.o [5]
+?mov_w1_w6              0x00837b          Code  Gb  vreg_util.o [5]
+?mov_w1_w7              0x0083a3          Code  Gb  vreg_util.o [5]
+?mov_w2_w1              0x008382          Code  Gb  vreg_util.o [5]
+?mov_w3_w5              0x0083b0          Code  Gb  vreg_util.o [5]
+?mov_w3_w7              0x0083bd          Code  Gb  vreg_util.o [5]
+?mov_w5_w0              0x008389          Code  Gb  vreg_util.o [5]
+?mov_w5_w1              0x0083ca          Code  Gb  vreg_util.o [5]
+?mov_w5_w3              0x0083d7          Code  Gb  vreg_util.o [5]
+?mov_w7_w1              0x0083e4          Code  Gb  vreg_util.o [5]
+?mov_w7_w3              0x0083f1          Code  Gb  vreg_util.o [5]
+?move1616_v_x_y_a       0x009c44          Code  Gb  move.o [5]
+?mul16_x_x_w0           0x00922d          Code  Gb  short.o [5]
+?mul32_l0_l0_0x         0x008153          Code  Gb  long.o [5]
+?mul32_l0_l0_l1         0x00815c          Code  Gb  long.o [5]
+?or16_x_x_dw            0x009266          Code  Gb  short.o [5]
+?or16_x_x_w0            0x009269          Code  Gb  short.o [5]
+?pop_l0                 0x008327          Code  Gb  vreg_util.o [5]
+?pop_l1                 0x008332          Code  Gb  vreg_util.o [5]
+?pop_l2                 0x00833d          Code  Gb  vreg_util.o [5]
+?pop_l3                 0x008348          Code  Gb  vreg_util.o [5]
+?pop_w4                 0x0082e0          Code  Gb  vreg_util.o [5]
+?pop_w6                 0x0082e7          Code  Gb  vreg_util.o [5]
+?push_l0                0x0082f6          Code  Gb  vreg_util.o [5]
+?push_l1                0x0082fb          Code  Gb  vreg_util.o [5]
+?push_l2                0x008300          Code  Gb  vreg_util.o [5]
+?push_l3                0x008305          Code  Gb  vreg_util.o [5]
+?push_w4                0x0082c3          Code  Gb  vreg_util.o [5]
+?push_w6                0x0082c8          Code  Gb  vreg_util.o [5]
+?scmp32_c_l0_l1         0x008267          Code  Gb  long.o [5]
+?sll16_x_x_10           0x00927b          Code  Gb  short.o [5]
+?sll16_x_x_11           0x00927a          Code  Gb  short.o [5]
+?sll16_x_x_12           0x009279          Code  Gb  short.o [5]
+?sll16_x_x_4            0x009281          Code  Gb  short.o [5]
+?sll16_x_x_5            0x009280          Code  Gb  short.o [5]
+?sll16_x_x_6            0x00927f          Code  Gb  short.o [5]
+?sll16_x_x_7            0x00927e          Code  Gb  short.o [5]
+?sll16_x_x_8            0x00927d          Code  Gb  short.o [5]
+?sll16_x_x_9            0x00927c          Code  Gb  short.o [5]
+?sll16_x_x_a            0x009271          Code  Gb  short.o [5]
+?smod16_y_x_y           0x00924b          Code  Gb  short.o [5]
+?sra32_0x_0x_a          0x0082b5          Code  Gb  long.o [5]
+?sra32_l0_l0_a          0x0082b2          Code  Gb  long.o [5]
+?sra32_l0_l0_db         0x0082ae          Code  Gb  long.o [5]
+?srl16_x_x_10           0x009287          Code  Gb  short.o [5]
+?srl16_x_x_11           0x009286          Code  Gb  short.o [5]
+?srl16_x_x_4            0x00928d          Code  Gb  short.o [5]
+?srl16_x_x_5            0x00928c          Code  Gb  short.o [5]
+?srl16_x_x_6            0x00928b          Code  Gb  short.o [5]
+?srl16_x_x_7            0x00928a          Code  Gb  short.o [5]
+?srl16_x_x_8            0x009289          Code  Gb  short.o [5]
+?srl16_x_x_9            0x009288          Code  Gb  short.o [5]
+?srl32_0x_0x_a          0x0082a0          Code  Gb  long.o [5]
+?srl32_l0_l0_a          0x00829d          Code  Gb  long.o [5]
+?srl32_l0_l0_db         0x008299          Code  Gb  long.o [5]
+?srl8_a_a_5             0x009ce4          Code  Gb  char.o [5]
+?ucmp32_c_l0_0x         0x00824c          Code  Gb  long.o [5]
+?ucmp32_c_l0_l1         0x00825c          Code  Gb  long.o [5]
+?udiv32_l0_l0_l1        0x0081df          Code  Gb  long.o [5]
+?umod32_l1_l0_dl        0x0081da          Code  Gb  long.o [5]
+?umod32_l1_l0_l1        0x0081df          Code  Gb  long.o [5]
+?w0                     0x000000          Data  Gb  vregs.o [5]
+?w1                     0x000002          Data  Gb  vregs.o [5]
+?w2                     0x000004          Data  Gb  vregs.o [5]
+?w3                     0x000006          Data  Gb  vregs.o [5]
+?w4                     0x000008          Data  Gb  vregs.o [5]
+?w5                     0x00000a          Data  Gb  vregs.o [5]
+?w6                     0x00000c          Data  Gb  vregs.o [5]
+?w7                     0x00000e          Data  Gb  vregs.o [5]
+A7139ChannelValues      0x009c51     0xc  Data  Gb  hal_rf.o [2]
+A7139Config             0x009a18    0x20  Data  Gb  hal_rf.o [2]
+A7139Config_PageA       0x009a38    0x20  Data  Gb  hal_rf.o [2]
+A7139Config_PageB       0x009c7e     0xa  Data  Gb  hal_rf.o [2]
+A7139_1_SpiSelect       0x009c88     0xa  Code  Lc  hal_rf.o [2]
+A7139_Config            0x008b3c    0x9c  Code  Lc  hal_rf.o [2]
+A7139_Delay             0x009359    0x62  Code  Lc  hal_rf.o [2]
+A7139_DeviceList        0x000010    0x46  Data  Gb  hal_rf.o [2]
+A7139_InterruptHandler  0x008943    0xaf  Code  Lc  hal_rf.o [2]
+A7139_ReadFIFO          0x0090ef    0x6d  Code  Lc  hal_rf.o [2]
+A7139_ReadPageA         0x0097e1    0x2f  Code  Lc  hal_rf.o [2]
+A7139_ReadRegister      0x009679    0x37  Code  Lc  hal_rf.o [2]
+A7139_SPIDevice1        0x000056     0x6  Data  Gb  hal_rf.o [2]
+A7139_SpiDelay          0x009d29     0x1  Code  Lc  hal_rf.o [2]
+A7139_StartRSSIMeasurement
+                        0x00956e    0x46  Code  Lc  hal_rf.o [2]
+A7139_WriteCommand      0x00990a    0x26  Code  Lc  hal_rf.o [2]
+A7139_WriteFIFO         0x0091c8    0x65  Code  Lc  hal_rf.o [2]
+A7139_WriteID           0x008aa0    0x9c  Code  Lc  hal_rf.o [2]
+A7139_WritePageA        0x00974e    0x32  Code  Lc  hal_rf.o [2]
+A7139_WritePageB        0x00971b    0x33  Code  Lc  hal_rf.o [2]
+A7139_WriteRegister     0x009780    0x31  Code  Lc  hal_rf.o [2]
+APP_CODE                0x00a800  0x48ed  Data  Gb  app.bin [1]
+BLCPUInit               0x009b3d    0x16  Code  Lc  port.o [2]
+BLDataCodeHandler       0x008f22    0x74  Code  Lc  bootloader.o [2]
+BLDataHandler           0x00907e    0x71  Code  Gb  bootloader.o [2]
+BLFlashErase            0x009d27     0x2  Code  Gb  port.o [2]
+BLFlashInit             0x009d15     0x3  Code  Lc  port.o [2]
+BLFlashWrite            0x008bd8    0x94  Code  Gb  port.o [2]
+BLGetMemSizeCmdHandler  0x008660    0x24  Code  Lc  bootloader.o [2]
+BLLinkReceiveCallback   0x0099c2    0x23  Code  Lc  port.o [2]
+BLLowDataSend           0x00997a    0x24  Code  Gb  port.o [2]
+BLPortInit              0x00915c    0x6c  Code  Gb  port.o [2]
+BLSTM8VectorList        0x008000    0x80  Data  Lc  port.o [2]
+BLSendPacket            0x008684    0x64  Code  Lc  bootloader.o [2]
+BLStartApplication      0x0098bc    0x27  Code  Gb  port.o [2]
+BLStartDownloadCmdHandler
+                        0x008603    0x5d  Code  Lc  bootloader.o [2]
+BLStartTimer            0x009ca4     0x8  Code  Gb  port.o [2]
+BLStartup               0x0095b4    0x43  Code  Gb  bootloader.o [2]
+BLStopTimer             0x009c5d     0xb  Code  Gb  port.o [2]
+BLTimerCallbackFn       0x0000aa     0x2  Data  Gb  port.o [2]
+BLTimerInit             0x009a58    0x20  Code  Lc  port.o [2]
+BLTimerInterrupt        0x0096b0    0x37  Code  Gb  port.o [2]
+BLTimerInterruptHandler
+                        0x0095f7    0x42  Code  Lc  bootloader.o [2]
+BLUpdateCmdHandler      0x008eac    0x76  Code  Lc  bootloader.o [2]
+BLWdgReload             0x009d12     0x3  Code  Gb  port.o [2]
+Bootloader              0x00007d    0x16  Data  Gb  bootloader.o [2]
+CLK_GetSYSCLKSource     0x009d02     0x4  Code  Gb  stm8l15x_clk.o [2]
+CLK_PeripheralClockConfig
+                        0x008e23    0x89  Code  Gb  stm8l15x_clk.o [2]
+CLK_SYSCLKDivConfig     0x009d06     0x4  Code  Gb  stm8l15x_clk.o [2]
+CLK_SYSCLKSourceConfig  0x009cfe     0x4  Code  Gb  stm8l15x_clk.o [2]
+CLK_SYSCLKSourceSwitchCmd
+                        0x009c03     0xd  Code  Gb  stm8l15x_clk.o [2]
+CSTACK$$Base            0x000700           --   Gb  - Linker created -
+CSTACK$$Limit           0x000800           --   Gb  - Linker created -
+DataChecksum            0x0097b1    0x30  Code  Lc  link.o [2]
+DeviceConfig            0x000064    0x19  Data  Gb  port.o [2]
+EXTI3_IRQHandler        0x009a98    0x1f  Code  Gb  hal_rf.o [2]
+EXTI_ClearITPendingBit  0x0099e5    0x21  Code  Gb  stm8l15x_exti.o [2]
+EXTI_SetPinSensitivity  0x0084fe   0x105  Code  Gb  stm8l15x_exti.o [2]
+FLASH_GetFlagStatus     0x009b7d    0x14  Code  Gb  stm8l15x_flash.o [2]
+FLASH_Lock              0x009cb4     0x7  Code  Gb  stm8l15x_flash.o [2]
+FLASH_ProgramByte       0x009d0a     0x4  Code  Gb  stm8l15x_flash.o [2]
+FLASH_ProgramWord       0x009930    0x25  Code  Gb  stm8l15x_flash.o [2]
+FLASH_ReadByte          0x009d0e     0x4  Code  Gb  stm8l15x_flash.o [2]
+FLASH_SetProgrammingTime
+                        0x009c68     0xb  Code  Gb  stm8l15x_flash.o [2]
+FLASH_Unlock            0x009af4    0x19  Code  Gb  stm8l15x_flash.o [2]
+GPIO_Configration       0x009810    0x2d  Code  Lc  hal_rf.o [2]
+GPIO_Init               0x0089f2    0xae  Code  Gb  stm8l15x_gpio.o [2]
+GPIO_ReadInputDataBit   0x009d18     0x3  Code  Gb  stm8l15x_gpio.o [2]
+GPIO_WriteBit           0x009c73     0xb  Code  Gb  stm8l15x_gpio.o [2]
+HEAP$$Base              0x0000b2           --   Gb  - Linker created -
+HEAP$$Limit             0x0004b2           --   Gb  - Linker created -
+HalFlashInit            0x009bb9    0x13  Code  Gb  hal_flash.o [2]
+HalFlashRead            0x009479    0x5a  Code  Gb  hal_flash.o [2]
+HalFlashWrite           0x009292    0x64  Code  Gb  hal_flash.o [2]
+HalRFInit               0x008f96    0x74  Code  Gb  hal_rf.o [2]
+HalRFReceive            0x009526    0x48  Code  Gb  hal_rf.o [2]
+HalRFRxFlag             0x0000a8     0x2  Data  Gb  hal_rf.o [2]
+HalRFSend               0x0093bb    0x5f  Code  Gb  hal_rf.o [2]
+HalRFSetChannel         0x0092f6    0x63  Code  Gb  hal_rf.o [2]
+HalRFTxFlag             0x000062     0x2  Data  Gb  hal_rf.o [2]
+INTVEC$$Base            0x008000           --   Gb  - Linker created -
+INTVEC$$Limit           0x008100           --   Gb  - Linker created -
+IWDG_ReloadCounter      0x009cd5     0x5  Code  Gb  stm8l15x_iwdg.o [2]
+IsNewPacket             0x0094d3    0x53  Code  Lc  link.o [2]
+LinkInit                0x009b53    0x15  Code  Gb  link.o [2]
+LinkInternalProcess     0x009639    0x40  Code  Gb  link.o [2]
+LinkSelf                0x000093    0x11  Data  Lc  link.o [2]
+LinkSend                0x0087b9    0xc7  Code  Gb  link.o [2]
+LinkSetAddress          0x009cf2     0x4  Code  Gb  link.o [2]
+LinkSetAreaId           0x009cc9     0x6  Code  Gb  link.o [2]
+LinkSetNetId            0x009cf6     0x4  Code  Gb  link.o [2]
+LinkSetReceiveCallback  0x009cfa     0x4  Code  Gb  link.o [2]
+RFRawDataInput          0x008880    0xc3  Code  Lc  link.o [2]
+RFRawDataOutput         0x009ab7    0x1f  Code  Lc  link.o [2]
+ReadDeviceConfig        0x008c6c    0x93  Code  Lc  port.o [2]
+Region$$Table$$Base     0x009a06           --   Gb  - Linker created -
+Region$$Table$$Limit    0x009a18           --   Gb  - Linker created -
+SourceAddress           0x0000ac     0x2  Data  Gb  port.o [2]
+TIM2_ARRPreloadConfig   0x009c10     0xd  Code  Gb  stm8l15x_tim2.o [2]
+TIM2_ClearFlag          0x009c2a     0xd  Code  Gb  stm8l15x_tim2.o [2]
+TIM2_Cmd                0x009c1d     0xd  Code  Gb  stm8l15x_tim2.o [2]
+TIM2_GetFlagStatus      0x0098e3    0x27  Code  Gb  stm8l15x_tim2.o [2]
+TIM2_TimeBaseInit       0x00986a    0x2a  Code  Gb  stm8l15x_tim2.o [2]
+TIM4_ClearFlag          0x009cda     0x5  Code  Gb  stm8l15x_tim4.o [2]
+TIM4_ClearITPendingBit  0x009cdf     0x5  Code  Gb  stm8l15x_tim4.o [2]
+TIM4_Cmd                0x009c37     0xd  Code  Gb  stm8l15x_tim4.o [2]
+TIM4_ITConfig           0x009bcc    0x13  Code  Gb  stm8l15x_tim4.o [2]
+TIM4_TimeBaseInit       0x009bf2    0x11  Code  Gb  stm8l15x_tim4.o [2]
+_A7139_Calibration      0x0083f8   0x106  Code  Lc  hal_rf.o [2]
+__DebugBreak            0x009d2a     0x1  Code  Gb  __dbg_break.o [4]
+__exit                  0x009ba5    0x14  Code  Gb  __dbg_xxexit.o [4]
+__iar_copy_init2        0x009894          Code  Gb  init_small.o [5]
+__iar_data_init2        0x009b26    0x17  Code  Gb  init.o [5]
+__iar_program_start     0x009bdf          Code  Gb  cstartup.o [5]
+__iar_unhandled_exception
+                        0x009d24          Code  Gb  unhandled_exception.o [5]
+__iar_zero_init2        0x009ad6          Code  Gb  init_small.o [5]
+__intvec                0x008080          Data  Gb  interrupt.o [5]
+__low_level_init        0x009d1e     0x3  Code  Gb  low_level_init.o [5]
+__near_Aldata           0x0000a4     0x4  Data  Gb  xxmemxmalloc.o [5]
+__near_GetMemChunk      0x009b0d    0x19  Code  Gb  xgetmemchunk.o [5]
+__near_findmem          0x00941a    0x5f  Code  Lc  xxmemxmalloc.o [5]
+_exit                   0x009ce9          Code  Gb  cexit.o [5]
+_interrupt_13           0x009a98          Code  Gb  hal_rf.o [2]
+exit                    0x009d21     0x3  Code  Gb  exit.o [5]
+free                    0x0086e8    0xd1  Code  Gb  xxmemxfree.o [5]
+main                    0x009c9c     0x8  Code  Gb  main.o [2]
+malloc                  0x008cff    0x93  Code  Gb  xxmemxmalloc.o [5]
+memcpy                  0x009955    0x25  Code  Gb  memcpy.o [5]
+memset                  0x009b68    0x15  Code  Gb  memset.o [5]
+spi_bus_1               0x00005c     0x6  Data  Gb  virtual_spi.o [2]
+spi_bus_1_miso_get      0x009b91    0x14  Code  Lc  virtual_spi.o [2]
+spi_bus_1_mosi_set      0x009a78    0x20  Code  Lc  virtual_spi.o [2]
+spi_bus_1_scl_set       0x009c92     0xa  Code  Lc  virtual_spi.o [2]
+spi_device_deselect     0x009cbb     0x7  Code  Gb  virtual_spi.o [2]
+spi_device_select       0x009ccf     0x6  Code  Gb  virtual_spi.o [2]
+spi_init                0x00999e    0x24  Code  Gb  virtual_spi.o [2]
+spi_send_recv           0x00900a    0x74  Code  Gb  virtual_spi.o [2]
+spi_send_recv_16        0x008d92    0x91  Code  Gb  virtual_spi.o [2]
+
+
+[1] = E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\IAR Project Files
+[2] = E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj
+[3] = command line
+[4] = dbgstm8smd.a
+[5] = dlstm8smn.a
+
+   7 103 bytes of readonly  code memory
+  19 117 bytes of readonly  data memory
+   1 458 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
