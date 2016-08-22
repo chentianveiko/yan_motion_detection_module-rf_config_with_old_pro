@@ -30,7 +30,7 @@
 #define CLK_TYPE_HSE  4
 
 // 开机后的参数配置时间
-#define CONFIG_TIME_RESTART           120                // 重启后的配置时间，单位秒
+#define CONFIG_TIME_RESTART           5                // 重启后的配置时间，单位秒
 #define LED_Flash_Interval            500                // 配置模式下LED闪烁间隔(1/2闪烁周期时间)
 
 // 设备默认参数定义
@@ -42,8 +42,8 @@
 #define IMD_RF_CHANNEL_DEFAULT        HAL_RF_CHANNEL_0  // 默认RF使用的信道
 #define IMD_BOOT_RF_CHANNEL_DEFAULT   HAL_RF_CHANNEL_0  // 默认Boot使用的RF信道
 #define IMD_LIGHT_LV_DEFAULT          100               // 默认的运动探测调光亮度
-#define IMD_LIGHT_SEND_PERIOD_DEFAULT 20                // 默认的运动探测发送最小周期30秒(解发开灯动作的最小间隔)
-#define IMD_LIGHT_ON_SECOND_DEFAULT   3               // 默认的开灯点亮时间为120秒
+#define IMD_LIGHT_SEND_PERIOD_DEFAULT 30                // 默认的运动探测发送最小周期30秒(解发开灯动作的最小间隔)
+#define IMD_LIGHT_ON_SECOND_DEFAULT   120               // 默认的开灯点亮时间为120秒
 
 // 设备类型定义
 #define DEV_TP_LAMP_CONTROLLER  0x00    // 设备类型--灯控制器
@@ -108,10 +108,10 @@ HAL_MCU_DATA_ALIGN(1)
 /* 设备网络参数定义 */
 typedef struct {
 	uint16_t LinkAddr;     // 设备地址
-	uint16_t LinkNetId;    // 设备网络地址
-	uint32_t LinkArealId;  // 设备区域号
-	bool enableRoute;      // 是否具备路由功能
-} LinkParDef;
+	uint16_t LinkNetId;// 设备网络地址
+	uint32_t LinkArealId;// 设备区域号
+	bool enableRoute;// 是否具备路由功能
+}LinkParDef;
 
 /* 灯控制参数定义 */
 typedef struct {
@@ -131,7 +131,7 @@ typedef struct {
 	bool enableRoute;
 	AppVersion_t version;
 	uint8_t channel;
-}ScanResponse_t;
+} ScanResponse_t;
 
 HAL_MCU_DATA_ALIGN(1)
 

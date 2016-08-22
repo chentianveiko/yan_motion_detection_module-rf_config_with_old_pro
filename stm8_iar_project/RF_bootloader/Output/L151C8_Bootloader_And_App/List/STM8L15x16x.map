@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V2.10.4.157 for STM8                     16/Aug/2016  15:38:27
+# IAR ELF Linker V2.10.4.157 for STM8                     22/Aug/2016  14:15:49
 # Copyright 2010-2015 IAR Systems AB.
 #
 #    Output file  =  
@@ -243,9 +243,9 @@ __rt_version               = 4
   Initializer bytes  const    0x009d2b    0x54  <for P2 s0>
                             - 0x009d7f  0x1c7f
 
-"A4":                                   0x48ed
-  .app_code          const    0x00a800  0x48ed  app.bin [1]
-                            - 0x00f0ed  0x48ed
+"A4":                                   0x4757
+  .app_code          const    0x00a800  0x4757  app.bin [1]
+                            - 0x00ef57  0x4757
 
 
 *******************************************************************************
@@ -273,9 +273,9 @@ Copy (__iar_copy_init2)
     Module                 ro code  ro data  rw data
     ------                 -------  -------  -------
 E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\IAR Project Files: [1]
-    app.bin                          18 669
+    app.bin                          18 263
     ------------------------------------------------
-    Total:                           18 669
+    Total:                           18 263
 
 E:\Veiko-Workspace\ChenTian\workspace\yan_motion_detection_module-rf_config_with_old_pro\stm8_iar_project\RF_bootloader\Output\L151C8_Bootloader_And_App\Obj: [2]
     bootloader.o               709                22
@@ -332,7 +332,7 @@ dlstm8smn.a: [5]
 
     Linker created                       18    1 280
 ----------------------------------------------------
-    Grand Total:             7 103   19 117    1 458
+    Grand Total:             7 103   18 711    1 458
 
 
 *******************************************************************************
@@ -500,7 +500,7 @@ A7139_WriteID           0x008aa0    0x9c  Code  Lc  hal_rf.o [2]
 A7139_WritePageA        0x00974e    0x32  Code  Lc  hal_rf.o [2]
 A7139_WritePageB        0x00971b    0x33  Code  Lc  hal_rf.o [2]
 A7139_WriteRegister     0x009780    0x31  Code  Lc  hal_rf.o [2]
-APP_CODE                0x00a800  0x48ed  Data  Gb  app.bin [1]
+APP_CODE                0x00a800  0x4757  Data  Gb  app.bin [1]
 BLCPUInit               0x009b3d    0x16  Code  Lc  port.o [2]
 BLDataCodeHandler       0x008f22    0x74  Code  Lc  bootloader.o [2]
 BLDataHandler           0x00907e    0x71  Code  Gb  bootloader.o [2]
@@ -632,7 +632,7 @@ spi_send_recv_16        0x008d92    0x91  Code  Gb  virtual_spi.o [2]
 [5] = dlstm8smn.a
 
    7 103 bytes of readonly  code memory
-  19 117 bytes of readonly  data memory
+  18 711 bytes of readonly  data memory
    1 458 bytes of readwrite data memory
 
 Errors: none

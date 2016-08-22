@@ -175,10 +175,10 @@ void MainLooper(void) {
 		if (ifIrWakeuped == true) {
 
 			// 当两次唤醒时间间隔超过设定值
-			if (HalTimeCompare(RTC_TimeStr, RTC_DateStr) > device_config.ctr_config.send_peroid) {
-				ifIrWakeuped = false;
-				ifNeedSend = true; // 准备发送灯控信号
-			}
+			//if (HalTimeCompare(RTC_TimeStr, RTC_DateStr) > device_config.ctr_config.send_peroid) {
+			ifIrWakeuped = false;
+			ifNeedSend = true; // 准备发送灯控信号
+			//}
 		}
 
 		// 判断是否是闹钟唤醒的
@@ -190,7 +190,7 @@ void MainLooper(void) {
 				// 准备发送一个灯控制信号
 				ifNeedSend = true;
 			} else {
-              ;
+				;
 			}
 
 			HalResetRtcAlarm();
@@ -370,7 +370,7 @@ static void rf_data_receive_handler(struct LinkMessage *message) {
 
 		// 空中升级
 	case LINK_ENTER_BOOTLOADER:
-        imd_rf_enterBootloader(message);
+		imd_rf_enterBootloader(message);
 		break;
 
 	default:
@@ -744,7 +744,7 @@ void imd_config_load(void) {
 
 		HalFlashWrite(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 	} else {
-      ;
+		;
 	}
 }
 /*
