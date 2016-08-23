@@ -19,9 +19,9 @@
 #define UsartDebug 0
 
 // 程序版本
-#define APP_VERSION      0
-#define APP_SUBVERSION   0
-#define APP_REVISION     1
+#define APP_VERSION      1
+#define APP_SUBVERSION   3
+#define APP_REVISION     2
 
 // 时钟配置时时钟类型定义
 #define CLK_TYPE_LSE  0
@@ -30,11 +30,11 @@
 #define CLK_TYPE_HSE  4
 
 // 开机后的参数配置时间
-#define CONFIG_TIME_RESTART           5                // 重启后的配置时间，单位秒
+#define CONFIG_TIME_RESTART           120                // 重启后的配置时间，单位秒
 #define LED_Flash_Interval            500                // 配置模式下LED闪烁间隔(1/2闪烁周期时间)
 
 // 设备默认参数定义
-#define FLASH_INIT_FLAG_VALUE         0x3A5A9AAA        // 设备参数初始化标志
+#define FLASH_INIT_FLAG_VALUE         0x5A5A9AAA        // 设备参数初始化标志
 #define IMD_LINK_ADDR_DEFAULT         0                 // 默认设备地址
 #define IMD_LINK_NET_ADDR_DEFAULT     1                 // 默认网络地址
 #define IMD_LINK_AREAL_ID_DEFAULT     4                 // 默认区域地址

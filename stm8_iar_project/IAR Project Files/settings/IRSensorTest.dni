@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1036148905
+Checksum=1784416315
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -21,27 +21,23 @@ Fmt2=LightParDef-groupId	3	0
 Fmt3=LinkParDef-LinkArealId	4	0
 [array_types]
 Fmt0=uint8_t[4]	4	0
+[watch_formats]
+Fmt0={W}1:device_config.init_flag	4	0
 [DataSample]
 LogEnabled=0
 GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.267.2" 1 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.269.2" 1 0 0 0 "" 0 ""
-Bp2=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\stm8l15x_it.c}.168.3" 1 0 0 0 "" 0 ""
-Bp3=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\stm8l15x_it.c}.182.3" 1 0 0 0 "" 0 ""
-Bp4=_ "STD_CODE" "{$PROJ_DIR$\..\Source\HAL\hal_mcu.c}.54.2" 1 0 0 0 "" 0 ""
-Bp5=_ "STD_CODE" "{$PROJ_DIR$\..\Source\HAL\hal_mcu.c}.46.2" 1 0 0 0 "" 0 ""
-Bp6=_ "STD_CODE" "{$PROJ_DIR$\..\Source\HAL\hal_mcu.c}.41.2" 1 0 0 0 "" 0 ""
-Count=7
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup\main.c}.219.5" 1 0 0 0 "" 0 ""
+Count=1
 [Aliases]
 A0=_ "E:\Veiko-Workspace\ChenTian\workspace\MotionDetection\ir_svn\Source\STM8L15x_StdPeriph_Driver\src\stm8l15x_rtc.c" ""
 A1=_ "E:\Veiko-Workspace\ChenTian\workspace\ir\Source\HAL\hal_rf.c" ""

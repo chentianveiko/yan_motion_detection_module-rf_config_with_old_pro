@@ -169,6 +169,8 @@ void MainLooper(void) {
 	while (1) {
 		HAL_MCU_ENTER_SLEEP();   // 进入睡眠模式，等待硬件唤醒
 		HAL_MCU_EXIT_SLEEP();    // 退出睡眠模式，并进行相关必要的配置程序
+        HalTIM4_Config();
+        enableInterrupts();
 
 		GetRtcValue();  // 获取当前RTC时间及日期参数
 
@@ -203,21 +205,19 @@ void MainLooper(void) {
 			memcpy(&RTC_DateStr_bck, &RTC_DateStr, sizeof(RTC_DateTypeDef));
 			memcpy(&RTC_TimeStr_bck, &RTC_TimeStr, sizeof(RTC_TimeTypeDef));
 
-			IrLightControl(device_config.ctr_config.groupId, device_config.ctr_config.Leval, (device_config.ctr_config.ON_seconds) * 1000); // 发送分组灯控制信号，其中10000是灯开的延时，超过这个时间后，回复到灯的前一个状态
-
-			// 等待无线信号发送完成
-			for (uint8_t i = 0; i < 3; i++) {
+			// 发送开灯信号--连续发送两次
+			for (uint8_t i = 0; i < 2; i++) {
+              Hal_RfTxComplete = 0;
+              IrLightControl(device_config.ctr_config.groupId, device_config.ctr_config.Leval, (device_config.ctr_config.ON_seconds) * 1000); // 发送分组灯控制信号，其中10000是灯开的延时，超过这个时间后，回复到灯的前一个状态
+                // 等待发送完成
 				HalRestartRunTimer(GenRunTimerID, 4, RT_TP_SECOND);
 				while (0 == Hal_RfTxComplete) {
 					if (HalgetRunTimerCnt(GenRunTimerID) == 0) {
 						break;
 					}
 				}
-				if (HalgetRunTimerCnt(GenRunTimerID) != 0) {
-					Hal_RfTxComplete = 0;
-					break;
-				}
 				Hal_RfTxComplete = 0;
+                HalRunTimerDelayms(1000);
 			}
 
 			// 发送完成后需要重新设置RTC闹钟以达到同步的目的
@@ -728,7 +728,7 @@ void imd_rf_enterBootloader(struct LinkMessage *message) {
  *******************************************************************************
  */
 void imd_config_load(void) {
-	HalFlashRead(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+	HalFlashRead(HAL_PAR_CONFIG_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 
 	if (device_config.init_flag != FLASH_INIT_FLAG_VALUE) {
 		device_config.init_flag = FLASH_INIT_FLAG_VALUE;
@@ -746,7 +746,7 @@ void imd_config_load(void) {
 		device_config.ctr_config.send_peroid = IMD_LIGHT_SEND_PERIOD_DEFAULT;
 		device_config.boot_rf_channel = IMD_BOOT_RF_CHANNEL_DEFAULT;
 
-		HalFlashWrite(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+		HalFlashWrite(HAL_PAR_CONFIG_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 	} else {
 		;
 	}
@@ -765,7 +765,7 @@ void imd_config_load(void) {
  *******************************************************************************
  */
 void imd_config_restore(void) {
-	HalFlashWrite(HAL_EEPROM_B0_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
+	HalFlashWrite(HAL_PAR_CONFIG_BEGIN_ADDR, (uint8_t *) (&device_config), sizeof(imd_config_t));
 }
 
 #ifdef  USE_FULL_ASSERT

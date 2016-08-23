@@ -42,6 +42,7 @@ typedef uint8_t hw_mcu_unique_id_t[12];
 #define HAL_MCU_FLASH_END_ADDR          0x00FFFF
 // EEPROM块0起止地址
 #define HAL_EEPROM_B0_BEGIN_ADDR           0x001000  // EEPROM的每个PAGE=BLOCK=128Bytes,具体使用方法参考PDF
+#define HAL_PAR_CONFIG_BEGIN_ADDR          (HAL_EEPROM_B0_BEGIN_ADDR+8)
 
 /*
  *******************************************************************************

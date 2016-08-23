@@ -135,6 +135,21 @@ void HalRestartRunTimer(uint8_t runTimerID, uint32_t timeset, uint8_t runtype) {
 	runTimerArray[runTimerID].active = true;
 	enableInterrupts();
 }
+/*
+ *********************************************************************************
+ 函数功能: 用超时定时器做的阻塞式延时
+ 函数参数: m_sec -- 延时的毫秒数
+ 函数返回: None
+ *********************************************************************************
+ */
+void HalRunTimerDelayms(uint32_t m_sec){
+  HalRestartRunTimer(RunTimerDelayID,m_sec,RT_TP_MSECOND);
+  while(1){
+    if(HalgetRunTimerCnt(RunTimerDelayID)==0){
+      break;
+    }
+  }
+}
 
 /*
  *********************************************************************************
