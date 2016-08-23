@@ -178,6 +178,8 @@ INTERRUPT_HANDLER(EXTI1_IRQHandler, 9)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+  ifIrWakeuped = true;
+  EXTI_ClearITPendingBit(EXTI_IT_Pin1);
 }
 
 /**

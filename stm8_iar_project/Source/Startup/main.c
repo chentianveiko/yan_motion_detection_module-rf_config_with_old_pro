@@ -263,13 +263,17 @@ int main(void) {
 	HalTIM4_Config();
 	ConfigLoop();  // 等待rf配置
 
+    disableInterrupts();
 	HalIRSensorInit();
+    EXTI_ClearITPendingBit(EXTI_IT_Pin0);
 	HalRtcInit();
+
 	if (SET == RTC_GetFlagStatus(RTC_FLAG_ALRAF)) {
 		RTC_ClearITPendingBit (RTC_IT_ALRA);
 	}
 	HalResetRtcAlarm();
 	HalTIM4_Config();
+    enableInterrupts();
 
 	MainLooper();  // 主循环
 }
