@@ -1,5 +1,5 @@
 [DebugChecksum]
-Checksum=-1724694654
+Checksum=-1477579027
 [Stack]
 FillEnabled=0
 OverflowWarningsEnabled=1
@@ -14,6 +14,9 @@ ByteLimit=50
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [DataSample]
 LogEnabled=0
 GraphEnabled=0
@@ -23,9 +26,6 @@ ShowTimeSum=1
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Breakpoints]
 Bp0=_ "STD_CODE" "{$PROJ_DIR$\..\Source\Startup}.112.1" 0 0 0 0 "" 0 ""
 Count=1

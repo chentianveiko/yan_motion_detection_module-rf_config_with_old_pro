@@ -167,15 +167,7 @@ void MainLooper(void) {
 
 	Hal_RfTxComplete = 0;
 	while (1) {
-		HAL_MCU_ENTER_SLEEP();   // 进入睡眠模式，等待硬件唤醒
-		HAL_MCU_EXIT_SLEEP();    // 退出睡眠模式，并进行相关必要的配置程序
         HalTIM4_Config();
-        disableInterrupts();
-        HalRFInit();
-        HalRFSetChannel(HalRF1, device_config.rf_channel);
-        enableInterrupts();
-
-
 
 		GetRtcValue();  // 获取当前RTC时间及日期参数
 
@@ -211,7 +203,7 @@ void MainLooper(void) {
 			memcpy(&RTC_TimeStr_bck, &RTC_TimeStr, sizeof(RTC_TimeTypeDef));
 
 			// 发送开灯信号--连续发送两次
-			for (uint8_t i = 0; i < 2; i++) {
+			//for (uint8_t i = 0; i < 2; i++) {
               Hal_RfTxComplete = 0;
 
               IrLightControl(device_config.ctr_config.groupId, device_config.ctr_config.Leval, (device_config.ctr_config.ON_seconds) * 1000); // 发送分组灯控制信号，其中10000是灯开的延时，超过这个时间后，回复到灯的前一个状态
@@ -226,8 +218,8 @@ void MainLooper(void) {
                 //HalRunTimerDelayms(100);
                 //HAL_LED_RED_OFF();
 				Hal_RfTxComplete = 0;
-                HalRunTimerDelayms(1000);
-			}
+                //HalRunTimerDelayms(1000);
+			//}
 
 			// 发送完成后需要重新设置RTC闹钟以达到同步的目的
 			HalResetRtcAlarm();
@@ -235,6 +227,14 @@ void MainLooper(void) {
 			EXTI_ClearITPendingBit (EXTI_IT_Pin0);  // 清除红外运动探测输出引脚中断标志
 			RTC_ClearITPendingBit (RTC_IT_ALRA);    // 清除闹钟中断标志
 		}
+
+        HAL_MCU_ENTER_SLEEP();   // 进入睡眠模式，等待硬件唤醒
+		HAL_MCU_EXIT_SLEEP();    // 退出睡眠模式，并进行相关必要的配置程序
+        HalTIM4_Config();
+        disableInterrupts();
+        HalRFInit();
+        HalRFSetChannel(HalRF1, device_config.rf_channel);
+        enableInterrupts();
 	}
 }
 /*
@@ -326,6 +326,9 @@ void ConfigLoop(void) {
 	}
 
 	HAL_LED_RED_OFF();
+    if(HalIR_GetOutPutStu() == true){
+      ifIrWakeuped = true;
+    }
 }
 /*
  *******************************************************************************
