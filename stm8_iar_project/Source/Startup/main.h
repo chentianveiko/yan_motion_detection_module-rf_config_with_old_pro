@@ -34,7 +34,7 @@
 #define LED_Flash_Interval            500                // 配置模式下LED闪烁间隔(1/2闪烁周期时间)
 
 // 设备默认参数定义
-#define FLASH_INIT_FLAG_VALUE         0x5A5A9AAA        // 设备参数初始化标志
+#define FLASH_INIT_FLAG_VALUE         0x4A5A9AAA        // 设备参数初始化标志
 #define IMD_LINK_ADDR_DEFAULT         0                 // 默认设备地址
 #define IMD_LINK_NET_ADDR_DEFAULT     1                 // 默认网络地址
 #define IMD_LINK_AREAL_ID_DEFAULT     4                 // 默认区域地址
